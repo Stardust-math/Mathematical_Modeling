@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    Mathematical Modeling HW 2 — A Progressive RPCA Framework for Image Restoration: From Basic Decomposition to Masked Completion
+  </title>
+
+  <meta name="description" content="Mathematical Modeling HW 2 project page.">
+  <meta property="og:title" content="Mathematical Modeling HW 2 — A Progressive RPCA Framework for Image Restoration: From Basic Decomposition to Masked Completion">
+  <meta property="og:description" content="A progressive RPCA framework for image restoration.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stardust-math.github.io/Mathematical_Modeling/HW_2/">
+
+  <link rel="icon" type="image/png" href="../static/images/favicon.png">
+  <link rel="apple-touch-icon" href="../static/images/favicon.png">
+
+  <link rel="stylesheet" href="../static/css/bulma.min.css">
+  <link rel="stylesheet" href="../static/css/index.css">
+  <link rel="stylesheet" href="../static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Reuse the same local style as HW_1 -->
+  <link rel="stylesheet" href="../HW_1/hw1.css">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="../static/js/fontawesome.all.min.js"></script>
+  <script defer src="../static/js/bulma-carousel.min.js"></script>
+  <script defer src="../static/js/bulma-slider.min.js"></script>
+  <script defer src="../static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero publication-header">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title hw-title">
+              Mathematical Modeling HW 2 &mdash;<br>
+              <span class="hw-title-sub">
+                A Progressive RPCA Framework for Image Restoration:<br>
+                From Basic Decomposition to Masked Completion
+              </span>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://stardust-math.github.io/" target="_blank" rel="noopener noreferrer">
+                  Jinghao Chen
+                </a>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <a href="mailto:chenjinghao@mail.ustc.edu.cn">chenjinghao@mail.ustc.edu.cn</a>
+                &nbsp;|&nbsp;
+                <a href="mailto:stardust.math26@gmail.com">stardust.math26@gmail.com</a>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                University of Science and Technology of China, School of Mathematical Sciences
+              </span>
+            </div>
+
+            <div class="publication-venue">
+              Course Project · Mathematical Modeling · HW 2
+            </div>
+
+            <div class="hw-meta">
+              <span class="hw-chip">RPCA</span>
+              <span class="hw-chip">Image Restoration</span>
+              <span class="hw-chip">TV Regularization</span>
+              <span class="hw-chip">Masked Completion</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a
+                    href="../HW%26ANS/Answer_2/A_Progressive_RPCA_Framework_for_Image_Restoration_From_Basic_Decomposition_to_Masked_Completion.pdf"
+                    download="A_Progressive_RPCA_Framework_for_Image_Restoration_From_Basic_Decomposition_to_Masked_Completion.pdf"
+                    class="external-link button is-normal is-rounded is-dark"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a
+                    href="https://github.com/Stardust-math/Mathematical_Modeling/tree/main/HW%26ANS/Answer_2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark"
+                  >
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light hw-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              This paper studies image restoration under a progressive implementation of Robust Principal Component Analysis (RPCA). Five versions are developed in sequence. The Basic version establishes a grayscale low-rank and sparse decomposition pipeline. The Color version extends the same decomposition logic to red-green-blue (RGB) images by processing three channels separately. The GUI_advanced version does not alter the optimization model, but improves the experimental interface through background computation, progress display, interactive inspection, and result export. The TV_Regularization version introduces total variation (TV) regularization on the low-rank component so that local oscillation can be suppressed while large-scale structure is retained. The Masked version further modifies the fidelity constraint by excluding manually selected damaged regions from direct fitting and completing them from the remaining valid observations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">Image Demos</h2>
+
+        <div id="image-carousel" class="carousel results-carousel">
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/Basic.png" alt="Basic RPCA" loading="lazy" />
+            <h2 class="subtitle has-text-centered">Basic RPCA</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/Color.png" alt="Color" loading="lazy" />
+            <h2 class="subtitle has-text-centered">Color</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/Color_GUI.png" alt="Color_GUI" loading="lazy" />
+            <h2 class="subtitle has-text-centered">Color_GUI</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/GUI_advanced.png" alt="GUI_advanced" loading="lazy" />
+            <h2 class="subtitle has-text-centered">GUI_advanced</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/TV_0.03.png" alt="TV Regularization with 0.03 regular weight" loading="lazy" />
+            <h2 class="subtitle has-text-centered">TV Regularization with 0.03 regular weight</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/TV_0.5.png" alt="TV Regularization with 0.5 regular weight" loading="lazy" />
+            <h2 class="subtitle has-text-centered">TV Regularization with 0.5 regular weight</h2>
+          </div>
+
+          <div class="item">
+            <img src="../HW%26ANS/Answer_2/Images/Masked.png" alt="Masked" loading="lazy" />
+            <h2 class="subtitle has-text-centered">Masked</h2>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">Video Demos</h2>
+
+        <div id="video-carousel" class="carousel results-carousel">
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/Basic.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/Basic.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">Basic RPCA</h2>
+          </div>
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/Color.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/Color.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">Color</h2>
+          </div>
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/GUI_advanced.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/GUI_advanced.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">GUI_advanced</h2>
+          </div>
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/TV_0.03.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/TV_0.03.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">TV Regularization with 0.03 regular weight</h2>
+          </div>
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/TV_0.5.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/TV_0.5.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">TV Regularization with 0.5 regular weight</h2>
+          </div>
+
+          <div class="item">
+            <video poster="../HW%26ANS/Answer_2/Images/Masked.png" controls muted loop playsinline preload="metadata" style="width: 100%; height: auto;">
+              <source src="../HW%26ANS/Answer_2/Videos/Masked.mp4" type="video/mp4">
+            </video>
+            <h2 class="subtitle has-text-centered">Masked</h2>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title has-text-centered">Poster</h2>
+        <div class="poster-shell">
+          <iframe
+            src="../HW%26ANS/Answer_2/A_Progressive_RPCA_Framework_for_Image_Restoration_From_Basic_Decomposition_to_Masked_Completion.pdf"
+            width="100%"
+            height="900"
+            style="border: none;">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+                Academic Project Page Template
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

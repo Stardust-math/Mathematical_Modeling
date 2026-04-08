@@ -30,21 +30,22 @@
   line-height: 1.25;
 }
 
-/* 课程项目标签 */
+/* 课程项目关键词标签 */
 .hw-meta {
   margin-top: 1rem;
 }
 
 .hw-chip {
   display: inline-block;
-  margin: 0.3rem 0.45rem;
-  padding: 0.45rem 0.9rem;
+  margin: 0.3rem 0.35rem;
+  padding: 0.42rem 0.85rem;
   border-radius: 999px;
-  background: var(--hw-accent-soft);
+  background: rgba(79, 70, 229, 0.10);
   border: 1px solid rgba(79, 70, 229, 0.18);
   color: #3730a3;
   font-size: 0.88rem;
   font-weight: 600;
+  line-height: 1.2;
 }
 
 /* 各模块统一做成轻卡片 */
@@ -68,24 +69,73 @@
   line-height: 1.85;
 }
 
-/* 统一图片/视频展示风格 */
+/* 轮播项基础样式 */
 .results-carousel .item {
   border-radius: 18px;
   background: #fafafa;
   border: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 10px;
 }
 
-.results-carousel .item img,
-.results-carousel .item video {
+/* 统一图片展示框 */
+.image-demo-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
   border-radius: 14px;
   overflow: hidden;
+  padding: 12px;
+}
+
+.image-demo-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
 }
 
+/* 统一视频展示框 */
+.video-demo-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.video-demo-frame video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+/* 标题区域高度统一 */
 .results-carousel .subtitle {
+  min-height: 3.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   margin-top: 0.9rem;
   font-weight: 600;
   color: #334155;
+  line-height: 1.35;
 }
 
 /* 单视频展示 */
@@ -110,7 +160,7 @@
   background: #fff;
 }
 
-/* 邮箱链接弱化一点，更 clean */
+/* 邮箱链接弱化一点 */
 .publication-authors a[href^="mailto:"] {
   color: #475569;
   text-decoration: none;
@@ -121,7 +171,7 @@
   text-decoration: underline;
 }
 
-/* Paper / Code 按钮更细致一点 */
+/* 按钮更细致一点 */
 .publication-links .button {
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
 }
@@ -149,5 +199,9 @@
   .hw-chip {
     font-size: 0.8rem;
     padding: 0.36rem 0.68rem;
+  }
+
+  .results-carousel .subtitle {
+    min-height: 4.2em;
   }
 }

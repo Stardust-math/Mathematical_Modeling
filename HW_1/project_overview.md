@@ -1,5 +1,3 @@
-> This section gives a compact, web-oriented summary of the project. It focuses on the modeling idea, the completed stages, and the practical value of the interface improvements.
-
 ### Core Modeling Idea
 
 For each city, the metro network is represented as a weighted graph $G=(V,E,w)$, where stations are vertices, adjacent connections are edges, and edge weights denote travel distances.

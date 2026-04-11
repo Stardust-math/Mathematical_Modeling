@@ -147,13 +147,16 @@
     </div>
   </section>
 
-  <section class="section hw-section md-section">
-    <div class="container is-max-desktop">
-      <div class="md-panel-header has-text-centered">
-        <h2 class="title is-3">Project Overview</h2>
-      </div>
-      <div id="hw1-markdown-content" class="content has-text-justified md-render">
-        <p class="md-loading">Loading project overview...</p>
+  <section class="hero is-small is-light hw-section md-section">
+    <div class="hero-body">
+      <div class="container">
+        <div class="md-panel-header">
+          <h2 class="title is-3 has-text-centered">Project Overview</h2>
+        </div>
+
+        <div class="md-panel">
+          <div class="md-render" id="project-overview"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -320,7 +323,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', async function () {
-      const target = document.getElementById('hw1-markdown-content');
+      const target = document.getElementById('project-overview');
       if (!target) return;
 
       try {
@@ -346,7 +349,7 @@
       } catch (error) {
         target.innerHTML = `
           <p class="md-error">
-            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_1</code> folder.
+            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_2</code> folder.
           </p>
         `;
         console.error('Markdown render error:', error);

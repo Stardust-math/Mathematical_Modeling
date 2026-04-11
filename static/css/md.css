@@ -125,6 +125,11 @@
   color: #b91c1c;
 }
 
+.md-section .container {
+  width: 100%;
+  max-width: 1152px;
+}
+
 @media (max-width: 768px) {
   .md-render {
     font-size: 1rem;

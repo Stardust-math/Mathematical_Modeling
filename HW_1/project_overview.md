@@ -1,50 +1,47 @@
-## Project Overview
+> This section gives a compact, web-oriented summary of the project. It focuses on the modeling idea, the completed stages, and the practical value of the interface improvements.
 
-This project develops a metro route planning system under a weighted-graph framework and presents the full implementation process from the original teaching template to a more complete and user-friendly system.
+### Core Modeling Idea
 
-## Repository Structure
+For each city, the metro network is represented as a weighted graph $G=(V,E,w)$, where stations are vertices, adjacent connections are edges, and edge weights denote travel distances.
 
-- **Basic**: completes the baseline route-planning functions, including graph construction, station indexing, shortest-path search, and route output.
-- **GUI_advanced**: extends the baseline system with a more interactive graphical interface and clearer route visualization.
-- **Optional**: further introduces transfer-aware route planning so that the algorithm can consider both travel distance and transfer overhead.
-- **Images** and **Videos**: provide visual demonstrations for different stages of the project.
+The basic route-planning task is
 
-## Core Modeling Idea
+$$
+\min_{P:s\to t}\sum_{(u,v)\in P} w(u,v),
+$$
 
-The metro network is modeled as a weighted undirected graph:
+which is solved by a hand-written Dijkstra algorithm.
 
-- each **station** is treated as a node,
-- each **connection between adjacent stations** is treated as an edge,
-- each edge weight represents the corresponding travel cost.
+### What Was Completed
 
-Based on this formulation, the shortest route between an origin and a destination is computed using a hand-written **Dijkstra algorithm**.
+- **Basic version:** completed graph construction, station-based query, and shortest-path computation.
+- **GUI_advanced version:** improved usability with **zooming**, **dragging**, and **fit-view** operations, making the network easier to inspect and interact with.
+- **Optional version:** extended the planner from pure distance minimization to **transfer-aware routing** when line metadata is available.
 
-## Stage-by-Stage Development
+### Transfer-Aware Extension
 
-### 1. Basic Stage
+To make the recommended route more realistic for passengers, the optional model adds a transfer penalty:
 
-The first stage focuses on completing the essential route-planning pipeline.  
-This includes defining the graph data structure, building the station connection graph, supporting station-name queries, and computing the shortest path between any two stations.
+$$
+\min_{P:s\to t}\left(
+\sum_{(u,v)\in P} w(u,v) + \tau\, N_{\text{transfer}}(P)
+\right),
+$$
 
-### 2. GUI Advanced Stage
+where $\tau$ is the transfer penalty and $N_{\text{transfer}}(P)$ is the number of line changes along the route.
 
-The second stage improves usability.  
-Instead of only returning textual results, the system provides a more intuitive interactive interface with clearer route presentation, making the program easier to demonstrate and use.
+This means the system can balance **distance efficiency** and **transfer convenience**, rather than optimizing only one criterion.
 
-### 3. Optional Stage
+### Demonstration Focus
 
-The final stage introduces a transfer-aware formulation.  
-Instead of searching only in the original station space, the system expands the state representation so that transfer penalties can be incorporated into the route cost. This allows the algorithm to balance pure travel distance and transfer convenience.
+A representative Beijing case compares the ordinary shortest path and the transfer-aware route from **Beigongmen** to **Guomao** under the setting $\tau = 1.0$.
 
-## Main Highlights
+On this page, the project is shown from three complementary perspectives:
 
-- A complete weighted-graph metro route planning framework.
-- A hand-written shortest-path solver rather than relying on external graph libraries.
-- A clearer and more interactive GUI for route display.
-- An optional transfer-aware extension for more realistic route recommendation.
-- A project page that integrates paper, code, images, video, and poster presentation.
+- **Abstract:** the overall problem setting and project stages
+- **This overview:** a concise explanation of the model and improvements
+- **Image / video demos and poster:** visual evidence of the interface and the final outcome
 
-## Notes for Visitors
+### Why the Project Is Meaningful
 
-This page emphasizes the final integrated presentation of the project, while the repository preserves the incremental development path from the original template to the advanced and optional versions.  
-Readers can therefore compare how the system evolves from a basic shortest-path solver into a more complete metro route planning application.
+This homework develops from a classical shortest-path exercise into a more complete interactive system. It not only solves the mathematical routing problem, but also improves how users **see**, **compare**, and **use** the solution in practice.

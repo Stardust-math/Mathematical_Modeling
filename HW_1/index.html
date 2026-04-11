@@ -22,8 +22,24 @@
   <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="../static/css/hw.css">
+  <link rel="stylesheet" href="../static/css/md.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="../static/js/fontawesome.all.min.js"></script>
@@ -131,6 +147,24 @@
     </div>
   </section>
 
+  <section class="section hw-section md-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="md-panel">
+            <div class="md-panel-header">
+              <h2 class="title is-3">Project Overview</h2>
+              <p class="subtitle is-6">Loaded from <code>project_overview.md</code></p>
+            </div>
+            <div id="hw1-markdown-content" class="content has-text-justified md-render">
+              <p class="md-loading">Loading project overview...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="hero is-small hw-section">
     <div class="hero-body">
       <div class="container">
@@ -219,6 +253,42 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const target = document.getElementById('hw1-markdown-content');
+      if (!target) return;
+
+      try {
+        const response = await fetch('./project_overview.md', { cache: 'no-cache' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const mdText = await response.text();
+
+        marked.setOptions({
+          gfm: true,
+          breaks: false,
+          headerIds: true,
+          mangle: false
+        });
+
+        target.innerHTML = marked.parse(mdText);
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          await window.MathJax.typesetPromise([target]);
+        }
+      } catch (error) {
+        target.innerHTML = `
+          <p class="md-error">
+            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_1</code> folder.
+          </p>
+        `;
+        console.error('Markdown render error:', error);
+      }
+    });
+  </script>
 
 </body>
 </html>

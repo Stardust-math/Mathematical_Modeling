@@ -326,6 +326,31 @@
       const target = document.getElementById('project-overview');
       if (!target) return;
 
+      function protectMath(text) {
+        const mathBlocks = [];
+        const patterns = [
+          /\$\$[\s\S]+?\$\$/g,
+          /\\\[[\s\S]+?\\\]/g,
+          /\\\([\s\S]+?\\\)/g,
+          /(?<!\\)\$(?!\$)(?:\\.|[^$\\])+(?<!\\)\$/g
+        ];
+
+        let protectedText = text;
+          for (const pattern of patterns) {
+            protectedText = protectedText.replace(pattern, (match) => {
+            const token = `@@MATH_${mathBlocks.length}@@`;
+            mathBlocks.push(match);
+            return token;
+          });
+        }
+
+        return { protectedText, mathBlocks };
+      }
+
+      function restoreMath(html, mathBlocks) {
+        return html.replace(/@@MATH_(\d+)@@/g, (_, index) => mathBlocks[Number(index)]);
+      }
+
       try {
         const response = await fetch('./project_overview.md', { cache: 'no-cache' });
         if (!response.ok) {
@@ -333,6 +358,7 @@
         }
 
         const mdText = await response.text();
+        const { protectedText, mathBlocks } = protectMath(mdText);
 
         marked.setOptions({
           gfm: true,
@@ -341,7 +367,8 @@
           mangle: false
         });
 
-        target.innerHTML = marked.parse(mdText);
+        const renderedHtml = marked.parse(protectedText);
+        target.innerHTML = restoreMath(renderedHtml, mathBlocks);
 
         if (window.MathJax && window.MathJax.typesetPromise) {
           await window.MathJax.typesetPromise([target]);

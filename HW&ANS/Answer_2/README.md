@@ -70,35 +70,35 @@ Here:
 ```text
 project/
 ├── Basic/
-    ├── main.py
-    ├── rpca_algorithm.py
-    ├── gui.py
-    └── figs/
-        └──1.png
+│   ├── main.py
+│   ├── rpca_algorithm.py
+│   ├── gui.py
+│   └── figs/
+│       └──1.png
 ├── Color/
-    ├── main.py
-    ├── rpca_algorithm.py
-    ├── gui.py
-    └── figs/
-        └──1.png
+│   ├── main.py
+│   ├── rpca_algorithm.py
+│   ├── gui.py
+│   └── figs/
+│       └──1.png
 ├── GUI_advanced/
-    ├── main.py
-    ├── rpca_algorithm.py
-    ├── gui.py
-    └── figs/
-        └──1.png
+│   ├── main.py
+│   ├── rpca_algorithm.py
+│   ├── gui.py
+│   └── figs/
+│       └──1.png
 ├── TV_Regularization/
-    ├── main.py
-    ├── rpca_algorithm.py
-    ├── gui.py
-    └── figs/
-        └──1.png
+│   ├── main.py
+│   ├── rpca_algorithm.py
+│   ├── gui.py
+│   └── figs/
+│       └──1.png
 ├── Masked/
-    ├── main.py
-    ├── rpca_algorithm.py
-    ├── gui.py
-    └── figs/
-        └──1.png
+│   ├── main.py
+│   ├── rpca_algorithm.py
+│   ├── gui.py
+│   └── figs/
+│       └──1.png
 ├── README.md
 └── environment.yml
 ```
@@ -108,11 +108,11 @@ project/
 - `main.py`  
   Entry point of the project.
 
-- `gui.py`  
-  Graphical user interface, including image loading, parameter setting, zooming, dragging, masking, saving results, and progress display.
-
 - `rpca_algorithm.py`  
   Core algorithm implementation, including ALM-based RPCA, TV regularization, masked restoration, and display-related helper functions.
+
+- `gui.py`  
+  Graphical user interface, including image loading, parameter setting, zooming, dragging, masking, saving results, and progress display.
 
 - `figs/`  
   Test images used by the program.
@@ -154,11 +154,40 @@ conda activate rpca-image-restoration
 
 ## 5. How to Run
 
-Make sure the test images are placed in the `figs/` folder.
+Each version has its own `main.py` entry file in the corresponding directory.
 
-Run the project with:
+### Run the Basic version
 
 ```bash
+cd Basic
+python main.py
+```
+
+### Run the Color version
+
+```bash
+cd Color
+python main.py
+```
+
+### Run the GUI_advanced version
+
+```bash
+cd GUI_advanced
+python main.py
+```
+
+### Run the TV_Regularization version
+
+```bash
+cd TV_Regularization
+python main.py
+```
+
+### Run the Masked version
+
+```bash
+cd Masked
 python main.py
 ```
 

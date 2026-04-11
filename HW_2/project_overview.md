@@ -48,7 +48,7 @@ For partially known damaged regions, not every pixel should be forced to match t
 Instead, the fidelity constraint is imposed only on the observed region $\Omega$:
 
 $$
-\min_{L,S} \|L\|_{*} + \lambda \|S\|_1 + \gamma\, TV(L)
+\min_{L,S} \|L\|_* + \lambda \|S\|_1 + \gamma\, TV(L)
 \quad \text{s.t.} \quad
 P_{\Omega}(A) = P_{\Omega}(L+S).
 $$

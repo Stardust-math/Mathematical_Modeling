@@ -47,11 +47,11 @@ In practice, this version is designed to produce cleaner visual results than pla
 For partially known damaged regions, not every pixel should be forced to match the observation.  
 Instead, the fidelity constraint is imposed only on the observed region $\Omega$:
 
-$$
+\[
 \min_{L,S} \|L\|_* + \lambda \|S\|_1 + \gamma\, TV(L)
 \quad \text{s.t.} \quad
 P_{\Omega}(A) = P_{\Omega}(L+S).
-$$
+\]
 
 Here, $P_{\Omega}(\cdot)$ denotes projection onto the valid observed pixels.  
 This allows the damaged area to be ignored during fitting and then completed from the structural prior of the model.

@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="../static/css/hw.css">
+  <link rel="stylesheet" href="../static/css/hw3_streamlit.css">
   <link rel="stylesheet" href="../static/css/md.css">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
@@ -30,8 +31,8 @@
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        inlineMath: [['$', '$'], ['\(', '\)']],
+        displayMath: [['$$', '$$'], ['\[', '\]']]
       },
       options: {
         skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
@@ -383,6 +384,42 @@
   <section class="hero is-small hw-section">
     <div class="hero-body">
       <div class="container">
+        <h2 class="title is-3 has-text-centered">Streamlit GUI</h2>
+        <p class="streamlit-gui-note">
+          This interactive GUI reproduces the local Streamlit platform for planar curve fitting and Fourier visualization.
+          You can explore the embedded app directly below, or open it in a separate tab for a larger workspace.
+        </p>
+
+        <div class="streamlit-gui-toolbar">
+          <a
+            href="https://stardust-math-mathematical-modeling.streamlit.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="external-link button is-normal is-rounded is-dark"
+          >
+            <span class="icon">
+              <i class="fas fa-up-right-from-square"></i>
+            </span>
+            <span>Open Full GUI</span>
+          </a>
+        </div>
+
+        <div class="streamlit-gui-shell">
+          <iframe
+            class="streamlit-gui-frame"
+            src="https://stardust-math-mathematical-modeling.streamlit.app/?embed=true&embed_options=show_padding&embed_options=hide_loading_screen"
+            title="Curve Fitting Streamlit GUI"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
         <h2 class="title has-text-centered">Paper Presentation</h2>
         <div class="poster-shell">
           <iframe
@@ -422,9 +459,9 @@
         const mathBlocks = [];
         const patterns = [
           /\$\$[\s\S]+?\$\$/g,
-          /\\\[[\s\S]+?\\\]/g,
-          /\\\([\s\S]+?\\\)/g,
-          /(?<!\\)\$(?!\$)(?:\\.|[^$\\])+(?<!\\)\$/g
+          /\\[[\s\S]+?\\]/g,
+          /\\([\s\S]+?\\)/g,
+          /(?<!\)\$(?!\$)(?:\.|[^$\])+(?<!\)\$/g
         ];
 
         let protectedText = text;

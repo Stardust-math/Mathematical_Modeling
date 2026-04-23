@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Mathematical Modeling HW 3 project page.">
+  <meta property="og:title" content="Mathematical Modeling HW 3 — Curve Fitting by Interpolation, Approximation, and Fourier Reconstruction">
+  <meta property="og:description" content="Curve fitting by interpolation, approximation, and Fourier reconstruction.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stardust-math.github.io/Mathematical_Modeling/HW_3/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    Mathematical Modeling HW 3 — Curve Fitting by Interpolation, Approximation, and Fourier Reconstruction
+  </title>
+
+  <link rel="icon" type="image/png" href="../static/images/favicon.png">
+  <link rel="apple-touch-icon" href="../static/images/favicon.png">
+
+  <link rel="stylesheet" href="../static/css/bulma.min.css">
+  <link rel="stylesheet" href="../static/css/index.css">
+  <link rel="stylesheet" href="../static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="../static/css/hw.css">
+  <link rel="stylesheet" href="../static/css/md.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="../static/js/fontawesome.all.min.js"></script>
+  <script defer src="../static/js/bulma-carousel.min.js"></script>
+  <script defer src="../static/js/bulma-slider.min.js"></script>
+  <script defer src="../static/js/index.js"></script>
+</head>
+
+<body>
+  <section class="hero publication-header">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title hw-title">
+              Mathematical Modeling HW 3 &mdash;<br>
+              <span class="hw-title-sub">
+                Curve Fitting by Interpolation, Approximation,<br>
+                and Fourier Reconstruction
+              </span>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://stardust-math.github.io/" target="_blank" rel="noopener noreferrer">
+                  Jinghao Chen
+                </a>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <a href="mailto:chenjinghao@mail.ustc.edu.cn">chenjinghao@mail.ustc.edu.cn</a>
+                &nbsp;|&nbsp;
+                <a href="mailto:stardust.math26@gmail.com">stardust.math26@gmail.com</a>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                University of Science and Technology of China, School of Mathematical Sciences
+              </span>
+            </div>
+
+            <div class="hw-meta">
+              <span class="hw-chip">Curve Fitting</span>
+              <span class="hw-chip">Interpolation</span>
+              <span class="hw-chip">Approximation</span>
+              <span class="hw-chip">Fourier Reconstruction</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a
+                    href="../HW%26ANS/Answer_3/Curve_Fitting_by_Interpolation_Approximation_and_Fourier_Reconstruction.pdf"
+                    download="Curve_Fitting_by_Interpolation_Approximation_and_Fourier_Reconstruction.pdf"
+                    class="external-link button is-normal is-rounded is-dark"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a
+                    href="https://github.com/Stardust-math/Mathematical_Modeling/tree/main/HW_3"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark"
+                  >
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light hw-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              This paper studies geometric curve fitting from scattered planar points and compares four main reconstruction families:
+              cubic Hermite spline interpolation, cubic B-spline interpolation, polynomial least-squares fitting, and B-spline least-squares fitting.
+              The experiments are organized around three central questions: how different fitting models behave on representative open and closed curves,
+              how parameterization and node density influence the quality of spline reconstruction, and how interpolation and approximation differ in robustness under noise.
+              In addition, a Fourier-series-based module is introduced for periodic closed contours, where the number of retained harmonics controls the balance
+              between compact representation and geometric accuracy. The overall framework combines geometric visualization, quantitative evaluation, and an interactive GUI,
+              providing a structured comparison between local interpolation, global approximation, and frequency-domain reconstruction strategies.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light hw-section md-section">
+    <div class="hero-body">
+      <div class="container">
+        <div class="md-panel-header">
+          <h2 class="title is-3 has-text-centered">Project Overview</h2>
+        </div>
+        <div class="md-panel">
+          <div class="md-render" id="project-overview"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">Image Demos</h2>
+        <div id="image-carousel" class="carousel results-carousel">
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/s_curve_comparison.svg" alt="Method comparison on the S-curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Method comparison on the S-curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/sine_modulated_comparison.svg" alt="Method comparison on the sinusoidally modulated curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Method comparison on the sinusoidally modulated curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/s_curve_local_zoom.svg" alt="Local zoom on the S-curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Local zoom on the S-curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/sine_modulated_local_zoom.svg" alt="Local zoom on the sinusoidally modulated curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Local zoom on the sinusoidally modulated curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/sine_modulated_parameterization_comparison.svg" alt="Parameterization comparison on the sinusoidally modulated curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Parameterization comparison on the sinusoidally modulated curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_parameterization_comparison.svg" alt="Parameterization comparison on the cardioid" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Parameterization comparison on the cardioid</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/s_curve_node_count_vs_error.svg" alt="Node-count experiment on the S-curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Node-count experiment on the S-curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_node_count_vs_error.svg" alt="Node-count experiment on the wavy circle" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Node-count experiment on the wavy circle</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/s_curve_noise_vs_error.svg" alt="Noise robustness on the S-curve" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Noise robustness on the S-curve</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/circle_noise_vs_error.svg" alt="Noise robustness on the circle" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Noise robustness on the circle</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/s_curve_error_boxplot.svg" alt="S-curve robustness boxplot" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">S-curve robustness boxplot</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/circle_error_violin.svg" alt="Circle robustness violin plot" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Circle robustness violin plot</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_K_vs_error.svg" alt="Cardioid Fourier error versus harmonic count" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid Fourier error versus harmonic count</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_K_vs_error.svg" alt="Wavy-circle Fourier error versus harmonic count" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle Fourier error versus harmonic count</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_K1.svg" alt="Cardioid reconstruction with K=1" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid reconstruction with K = 1</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_K5.svg" alt="Cardioid reconstruction with K=5" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid reconstruction with K = 5</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_K20.svg" alt="Cardioid reconstruction with K=20" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid reconstruction with K = 20</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_K30.svg" alt="Cardioid reconstruction with K=30" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid reconstruction with K = 30</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_K1.svg" alt="Wavy-circle reconstruction with K=1" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle reconstruction with K = 1</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_K5.svg" alt="Wavy-circle reconstruction with K=5" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle reconstruction with K = 5</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_K12.svg" alt="Wavy-circle reconstruction with K=12" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle reconstruction with K = 12</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_K30.svg" alt="Wavy-circle reconstruction with K=30" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle reconstruction with K = 30</h2>
+          </div>
+
+          <!--
+          Optional GUI screenshot block.
+          Uncomment this item after you upload HW_3/Images/GUI.jpeg to the repository.
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/GUI.jpeg" alt="Interactive GUI" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Interactive GUI</h2>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">GIF Demos</h2>
+        <div id="gif-carousel" class="carousel results-carousel">
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/cardioid_epicycle.gif" alt="Cardioid epicycle animation" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Cardioid epicycle animation</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/circle_epicycle.gif" alt="Circle epicycle animation" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Circle epicycle animation</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/ellipse_epicycle.gif" alt="Ellipse epicycle animation" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Ellipse epicycle animation</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/rose_epicycle.gif" alt="Rose-curve epicycle animation" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Rose-curve epicycle animation</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/wavy_circle_epicycle.gif" alt="Wavy-circle epicycle animation" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Wavy-circle epicycle animation</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title has-text-centered">Paper Presentation</h2>
+        <div class="poster-shell">
+          <iframe
+            src="../HW%26ANS/Answer_3/Curve_Fitting_by_Interpolation_Approximation_and_Fourier_Reconstruction.pdf"
+            width="100%"
+            height="900"
+            style="border: none;">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+                Academic Project Page Template
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const target = document.getElementById('project-overview');
+      if (!target) return;
+
+      function protectMath(text) {
+        const mathBlocks = [];
+        const patterns = [
+          /\$\$[\s\S]+?\$\$/g,
+          /\\\[[\s\S]+?\\\]/g,
+          /\\\([\s\S]+?\\\)/g,
+          /(?<!\\)\$(?!\$)(?:\\.|[^$\\])+(?<!\\)\$/g
+        ];
+
+        let protectedText = text;
+        for (const pattern of patterns) {
+          protectedText = protectedText.replace(pattern, (match) => {
+            const token = `@@MATH_${mathBlocks.length}@@`;
+            mathBlocks.push(match);
+            return token;
+          });
+        }
+        return { protectedText, mathBlocks };
+      }
+
+      function restoreMath(html, mathBlocks) {
+        return html.replace(/@@MATH_(\d+)@@/g, (_, index) => mathBlocks[Number(index)]);
+      }
+
+      try {
+        const response = await fetch('./project_overview.md', { cache: 'no-cache' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const mdText = await response.text();
+        const { protectedText, mathBlocks } = protectMath(mdText);
+
+        marked.setOptions({
+          gfm: true,
+          breaks: false,
+          headerIds: true,
+          mangle: false
+        });
+
+        const renderedHtml = marked.parse(protectedText);
+        target.innerHTML = restoreMath(renderedHtml, mathBlocks);
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          await window.MathJax.typesetPromise([target]);
+        }
+      } catch (error) {
+        target.innerHTML = `
+          <p class="md-error">
+            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_3</code> folder.
+          </p>
+        `;
+        console.error('Markdown render error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -68,7 +68,6 @@ curvefit/
 │     └─ utils.py                      # utility functions
 ├─ tools/
 │  └─ ui_helpers.bat                   # helper bat utilities
-├─ Curve_Fitting_by_Interpolation_Approximation_and_Fourier_Reconstruction.pdf
 ├─ environment.yml                     # conda environment definition
 ├─ setup_env.bat                       # one-click environment setup
 ├─ run_smoke_test.bat                  # smoke test

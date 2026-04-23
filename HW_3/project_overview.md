@@ -215,8 +215,8 @@ This quantity emphasizes the average deviation from the reference curve to the f
 To measure worst-case geometric discrepancy, the Hausdorff distance is defined as
 
 $$
-d_{\mathrm{H}}(A,B)=\max\Bigg\{\max_{a\in A}\min_{b\in B}\lVert a-b\rVert_2,
-\max_{b\in B}\min_{a\in A}\lVert b-a\rVert_2\Bigg\}.
+d_{\mathrm{H}}(A,B)=\max\left\{\max_{a\in A}\min_{b\in B}\lVert a-b\rVert_2,
+\max_{b\in B}\min_{a\in A}\lVert b-a\rVert_2\right\}.
 $$
 
 Unlike Chamfer distance, this metric is dominated by the largest local mismatch.

@@ -68,12 +68,6 @@ curvefit_project/
 │     └─ utils.py                      # utility functions
 ├─ tools/
 │  └─ ui_helpers.bat                   # helper bat utilities
-├─ tex/
-│  ├─ cas-common.sty                   # style file
-│  ├─ cas-model2-names.bst             # bibliography style
-│  ├─ cas-refs.bib                     # bibliography database
-│  ├─ cas-sc.cls                       # class file
-│  └─ hw3_report.tex                   # report source file
 ├─ environment.yml                     # conda environment definition
 ├─ setup_env.bat                       # one-click environment setup
 ├─ run_smoke_test.bat                  # smoke test

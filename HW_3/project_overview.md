@@ -215,8 +215,12 @@ This quantity emphasizes the average deviation from the reference curve to the f
 To measure worst-case geometric discrepancy, the Hausdorff distance is defined as
 
 $$
-d_{\mathrm{H}}(A,B)=\max\left\{\max_{a\in A}\min_{b\in B}\lVert a-b\rVert_2,
-\max_{b\in B}\min_{a\in A}\lVert b-a\rVert_2\right\}.
+d_{\mathrm{H}}(A,B)
+=
+\max\left\{
+\max_{a\in A}\min_{b\in B}\lVert a-b\rVert_2,\;
+\max_{b\in B}\min_{a\in A}\lVert b-a\rVert_2
+\right\}.
 $$
 
 Unlike Chamfer distance, this metric is dominated by the largest local mismatch.
@@ -260,15 +264,3 @@ This gives a compact frequency-domain description of the curve:
 - large $K$ reproduces fine details and sharp local undulations.
 
 The cardioid and wavy-circle examples show this progression clearly. Their static reconstructions visualize how the contour evolves as $K$ increases, and the GIF demonstrations make the epicycle interpretation directly visible. The error-versus-$K$ figures confirm the same trend quantitatively: reconstruction error drops rapidly at first and then enters a saturation regime once the dominant modes have already been captured.
-
-## 8. Website Content Arrangement
-
-Following the report structure, the webpage is arranged in the same logical order:
-
-1. **Abstract**
-2. **Project overview and workflow**
-3. **Static SVG figures** in the same order as the report figures
-4. **GIF demos** for Fourier epicycle reconstruction
-5. **Embedded PDF report**
-
-If you later upload `HW_3/Images/GUI.jpeg`, you can also enable the optional GUI screenshot block already reserved in `index.html`.

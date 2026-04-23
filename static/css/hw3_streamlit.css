@@ -1,0 +1,51 @@
+:root {
+  --hw3-streamlit-frame-height: 980px;
+}
+
+.streamlit-gui-note {
+  max-width: 920px;
+  margin: 0 auto 1rem;
+  text-align: center;
+  color: #475569;
+  line-height: 1.75;
+}
+
+.streamlit-gui-toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.streamlit-gui-shell {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.streamlit-gui-frame {
+  width: 100%;
+  height: var(--hw3-streamlit-frame-height);
+  border: none;
+  display: block;
+  background: #ffffff;
+}
+
+@media screen and (max-width: 1023px) {
+  :root {
+    --hw3-streamlit-frame-height: 1080px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --hw3-streamlit-frame-height: 1220px;
+  }
+
+  .streamlit-gui-note {
+    font-size: 0.96rem;
+  }
+}

@@ -320,18 +320,6 @@
             </div>
             <h2 class="subtitle has-text-centered">Wavy-circle reconstruction with K = 30</h2>
           </div>
-
-          <!--
-          Optional GUI screenshot block.
-          Uncomment this item after you upload HW_3/Images/GUI.jpeg to the repository.
-
-          <div class="item">
-            <div class="image-demo-frame">
-              <img src="./Images/GUI.jpeg" alt="Interactive GUI" loading="lazy" />
-            </div>
-            <h2 class="subtitle has-text-centered">Interactive GUI</h2>
-          </div>
-          -->
         </div>
       </div>
     </div>
@@ -450,66 +438,113 @@
     </div>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async function () {
-      const target = document.getElementById('project-overview');
-      if (!target) return;
+<script>
+  document.addEventListener('DOMContentLoaded', async function () {
+    const target = document.getElementById('project-overview');
+    if (!target) return;
 
-      function protectMath(text) {
-        const mathBlocks = [];
-        const patterns = [
-          /\$\$[\s\S]+?\$\$/g,
-          /\\[[\s\S]+?\\]/g,
-          /\\([\s\S]+?\\)/g,
-          /(?<!\)\$(?!\$)(?:\.|[^$\])+(?<!\)\$/g
-        ];
+    function protectMath(text) {
+      const mathBlocks = [];
+      let i = 0;
+      let protectedText = '';
 
-        let protectedText = text;
-        for (const pattern of patterns) {
-          protectedText = protectedText.replace(pattern, (match) => {
-            const token = `@@MATH_${mathBlocks.length}@@`;
-            mathBlocks.push(match);
-            return token;
-          });
-        }
-        return { protectedText, mathBlocks };
+      function pushToken(value) {
+        const token = `@@MATH_${mathBlocks.length}@@`;
+        mathBlocks.push(value);
+        protectedText += token;
       }
 
-      function restoreMath(html, mathBlocks) {
-        return html.replace(/@@MATH_(\d+)@@/g, (_, index) => mathBlocks[Number(index)]);
-      }
-
-      try {
-        const response = await fetch('./project_overview.md', { cache: 'no-cache' });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+      while (i < text.length) {
+        if (text.startsWith('$$', i)) {
+          const end = text.indexOf('$$', i + 2);
+          if (end !== -1) {
+            pushToken(text.slice(i, end + 2));
+            i = end + 2;
+            continue;
+          }
         }
 
-        const mdText = await response.text();
-        const { protectedText, mathBlocks } = protectMath(mdText);
-
-        marked.setOptions({
-          gfm: true,
-          breaks: false,
-          headerIds: true,
-          mangle: false
-        });
-
-        const renderedHtml = marked.parse(protectedText);
-        target.innerHTML = restoreMath(renderedHtml, mathBlocks);
-
-        if (window.MathJax && window.MathJax.typesetPromise) {
-          await window.MathJax.typesetPromise([target]);
+        if (text.startsWith('\\[', i)) {
+          const end = text.indexOf('\\]', i + 2);
+          if (end !== -1) {
+            pushToken(text.slice(i, end + 2));
+            i = end + 2;
+            continue;
+          }
         }
-      } catch (error) {
-        target.innerHTML = `
-          <p class="md-error">
-            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_3</code> folder.
-          </p>
-        `;
-        console.error('Markdown render error:', error);
+
+        if (text.startsWith('\\(', i)) {
+          const end = text.indexOf('\\)', i + 2);
+          if (end !== -1) {
+            pushToken(text.slice(i, end + 2));
+            i = end + 2;
+            continue;
+          }
+        }
+
+        if (
+          text[i] === '$' &&
+          (i === 0 || text[i - 1] !== '\\') &&
+          text[i + 1] !== '$'
+        ) {
+          let j = i + 1;
+          while (j < text.length) {
+            if (text[j] === '$' && text[j - 1] !== '\\') break;
+            j++;
+          }
+          if (j < text.length) {
+            pushToken(text.slice(i, j + 1));
+            i = j + 1;
+            continue;
+          }
+        }
+
+        protectedText += text[i];
+        i++;
       }
-    });
-  </script>
+
+      return { protectedText, mathBlocks };
+    }
+
+    function restoreMath(html, mathBlocks) {
+      return html.replace(/@@MATH_(\d+)@@/g, (_, index) => {
+        return mathBlocks[Number(index)];
+      });
+    }
+
+    try {
+      if (typeof marked === 'undefined') {
+        throw new Error('marked.js failed to load');
+      }
+
+      const response = await fetch('./project_overview.md', { cache: 'no-cache' });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const mdText = await response.text();
+      const { protectedText, mathBlocks } = protectMath(mdText);
+
+      marked.setOptions({
+        gfm: true,
+        breaks: false
+      });
+
+      const renderedHtml = marked.parse(protectedText);
+      target.innerHTML = restoreMath(renderedHtml, mathBlocks);
+
+      if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+        await window.MathJax.typesetPromise([target]);
+      }
+    } catch (error) {
+      target.innerHTML = `
+        <p class="md-error">
+          Failed to load <code>project_overview.md</code>: ${String(error.message || error)}
+        </p>
+      `;
+      console.error('Markdown render error:', error);
+    }
+  });
+</script>
 </body>
 </html>

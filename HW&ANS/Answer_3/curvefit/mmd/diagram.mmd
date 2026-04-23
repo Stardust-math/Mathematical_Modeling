@@ -1,0 +1,107 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#f3f3f3",
+    "fontFamily": "Aptos, Segoe UI, Inter, Helvetica, Arial, sans-serif",
+    "fontSize": "18px",
+    "lineColor": "#263a56",
+    "primaryTextColor": "#0f172a",
+    "clusterBkg": "transparent",
+    "clusterBorder": "transparent"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "curve": "linear",
+    "nodeSpacing": 40,
+    "rankSpacing": 55,
+    "padding": 12
+  }
+}}%%
+
+flowchart LR
+
+    %% =========================
+    %% Left side (group-centered)
+    %% =========================
+    subgraph LEFT[" "]
+        direction LR
+        IN("<b>Input data</b><br/>Planar scattered<br/>points<br/>(open / closed curves)"):::blue
+        PA("<b>Parameterization</b><br/>Uniform<br/>(chord / centripetal /<br/>Foley–Nielsen)"):::gray
+        IN --> PA
+    end
+
+    %% =========================
+    %% Main fitting branch (title removed)
+    %% =========================
+    subgraph MAIN[" "]
+        direction TB
+
+        subgraph MAIN_TOP[" "]
+            direction LR
+            I1("<b>Interpolation</b><br/>Exact node<br/>matching"):::orange
+            I2("<b>Cubic spline</b><br/>Piecewise cubic<br/>C² continuity"):::orange
+            I3("<b>Polynomial LS</b><br/>Global polynomial<br/>model"):::orange
+            I1 --> I2 --> I3
+        end
+
+        subgraph MAIN_BOTTOM[" "]
+            direction LR
+            A1("<b>Approximation</b><br/>Least-squares<br/>smoothing"):::orange
+            A2("<b>B-spline interp.</b><br/>Basis expansion<br/>(exact interpolation)"):::orange
+            A3("<b>B-spline LS</b><br/>Local basis +<br/>LS fitting"):::orange
+            A1 --> A2 --> A3
+        end
+    end
+
+    %% =========================
+    %% Closed-curve Fourier branch (title removed)
+    %% =========================
+    subgraph FOUR[" "]
+        direction LR
+        F1("<b>Resampling</b><br/>Uniform arclength<br/>sampling"):::green
+        F2("<b>Complex<br/>representation</b><br/>z(t)=x(t)+iy(t)<br/>Periodic closed contour"):::green
+        F3("<b>Fourier model</b><br/>DFT coefficients<br/>(truncated order <i>K</i>)"):::green
+        F4("<b>Reconstruction<br/>analysis</b><br/>Epicycle view<br/>Staged reconstruction<br/>Error decay vs. <i>K</i>"):::green
+        F1 --> F2 --> F3 --> F4
+    end
+
+    %% =========================
+    %% Right side (group-centered)
+    %% =========================
+    subgraph RIGHT[" "]
+        direction TB
+        EV("<b>Evaluation</b><br/>Chamfer distance<br/>Point-to-curve distance<br/>Hausdorff distance<br/>------------------------<br/>Runtime / node count /<br/>noise robustness"):::purple
+        OUT("<b>Outputs</b><br/>Comparison plots<br/>Local zooms<br/>Robustness figures<br/>GUI / Fourier sequences"):::blue2
+    end
+
+    %% =========================
+    %% Cross-branch connections
+    %% =========================
+    PA --> I1
+    PA --> A1
+    PA --> F1
+
+    I3 --> EV
+    A3 --> EV
+    F4 -.-> EV
+    F4 --> OUT
+
+    %% =========================
+    %% Subgraph styles
+    %% =========================
+    style LEFT fill:transparent,stroke:transparent
+    style MAIN fill:transparent,stroke:transparent
+    style MAIN_TOP fill:transparent,stroke:transparent
+    style MAIN_BOTTOM fill:transparent,stroke:transparent
+    style FOUR fill:transparent,stroke:transparent
+    style RIGHT fill:transparent,stroke:transparent
+
+    %% =========================
+    %% Node classes
+    %% =========================
+    classDef blue fill:#eef4ff,stroke:#1f5fd1,stroke-width:2px,color:#0f172a;
+    classDef blue2 fill:#edf3fb,stroke:#1f5fd1,stroke-width:2px,color:#0f172a;
+    classDef gray fill:#eceff3,stroke:#5c6675,stroke-width:2px,color:#0f172a;
+    classDef orange fill:#f8f3ea,stroke:#e56a13,stroke-width:2px,color:#0f172a;
+    classDef green fill:#edf5ef,stroke:#189246,stroke-width:2px,color:#0f172a;
+    classDef purple fill:#f2eef7,stroke:#6d28d9,stroke-width:2px,color:#0f172a;

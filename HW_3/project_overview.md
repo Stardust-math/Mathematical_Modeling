@@ -1,128 +1,249 @@
 ## 1. Problem Setting
 
-This project studies planar curve reconstruction from sampled points and compares **four fitting models** together with a **Fourier reconstruction module** for periodic closed contours:
+This project studies planar curve reconstruction from sampled points and compares three complementary viewpoints:
 
-1. **Cubic Hermite spline interpolation**
-2. **Cubic B-spline interpolation**
-3. **Polynomial least-squares fitting**
-4. **B-spline least-squares fitting**
-5. **Fourier-series reconstruction for periodic closed curves**
+1. **local interpolation**, represented by cubic Hermite splines and cubic B-spline interpolation;
+2. **global approximation**, represented by polynomial and B-spline least-squares fitting;
+3. **frequency-domain reconstruction**, represented by truncated Fourier series for periodic closed contours.
 
-The goal is not only to recover visually accurate curves, but also to understand how the reconstruction quality changes with parameterization, node density, noise, and harmonic truncation. The report therefore compares **interpolation versus approximation**, **local basis versus global basis**, and **time-domain fitting versus frequency-domain reconstruction** under a unified evaluation framework.
+The goal is not only to obtain visually accurate curves, but also to understand how reconstruction changes with parameterization, node density, noise, and harmonic truncation.
 
-## 2. Interpolation and Approximation Models
+## 2. Overall Workflow
 
-The fitting part of the project is organized into **two interpolation methods** and **two approximation methods**.
+<div align="center">
+  <img src="./Images/workflow_overview.svg" alt="Overall workflow" style="width:100%; max-width:1400px;">
+</div>
 
-### 2.1 Interpolation methods
+The workflow starts from scattered planar samples, assigns parameters, applies either interpolation or approximation models, evaluates the reconstructed curves quantitatively, and finally visualizes the results on the webpage. For periodic closed contours, a Fourier branch is added to study harmonic truncation and epicycle-style reconstruction.
 
-For **cubic Hermite spline interpolation**, each interval is represented by a cubic polynomial determined by endpoint values and endpoint derivatives:
+## 3. Parameterization
 
-$$
-\mathbf{r}_i(t)=h_{00}(t)\mathbf{P}_i+h_{10}(t)\mathbf{m}_i+h_{01}(t)\mathbf{P}_{i+1}+h_{11}(t)\mathbf{m}_{i+1},
-$$
+The parameter value attached to each sample point is crucial for all spline-based models. The report compares several standard strategies.
 
-where $\mathbf{P}_i$ are sampled points, $\mathbf{m}_i$ are estimated tangents, and $h_{00}, h_{10}, h_{01}, h_{11}$ are the standard cubic Hermite basis functions.
-
-For **cubic B-spline interpolation**, the curve is written as
+For **uniform parameterization**,
 
 $$
-\mathbf{r}(t)=\sum_j \mathbf{C}_j N_{j,3}(t),
+t_i = \frac{i}{n}, \qquad i=0,1,\dots,n.
 $$
 
-where $N_{j,3}(t)$ are cubic B-spline basis functions and $\mathbf{C}_j$ are control points determined from interpolation constraints.
+For **chord-length parameterization**,
 
-Both interpolation methods enforce the sampled data strongly, but they differ in representation: Hermite interpolation is driven directly by point values and tangent information, while B-spline interpolation is expressed through local spline bases and control points.
+$$
+t_0=0, \qquad
+t_i = t_{i-1} + \|P_i - P_{i-1}\|, \qquad i=1,2,\dots,n,
+$$
 
-### 2.2 Approximation methods
+followed by normalization to $[0,1]$.
 
-For **polynomial least-squares fitting**, the curve coordinates are approximated by global polynomials whose coefficients minimize the residual over all sampled points.
+For the curvature-aware **Foley-type parameterization**, the increment is adjusted by local turning information. In the implementation, the distance increment is modified by the turning angle and then averaged between adjacent segments so that parameter spacing becomes more sensitive to regions with rapid directional change.
 
-For **B-spline least-squares fitting**, the same least-squares idea is combined with spline basis functions, so the approximation remains smooth while retaining local support.
+## 4. Interpolation and Approximation Models
 
-These two approximation models do not pass exactly through every sample. Instead, they trade interpolation accuracy for smoothing and stability, which becomes especially important in the noisy experiments.
+### 4.1 Cubic Hermite spline interpolation
 
-### 2.3 Unified comparison
+On each interval $[t_i,t_{i+1}]$, the curve is written in the same form as in the report:
 
-Taken together, the four fitting models form two natural contrasts:
+$$
+C_i(t)=h_{00}(u)P_i+h_{10}(u)(t_{i+1}-t_i)M_i+h_{01}(u)P_{i+1}+h_{11}(u)(t_{i+1}-t_i)M_{i+1},
+$$
 
-- **Hermite interpolation vs. B-spline interpolation**: both are interpolatory, but they use different local representations.
-- **Polynomial least squares vs. B-spline least squares**: both are approximating, but one is global and the other is spline-based.
-- **Interpolation vs. approximation**: interpolation preserves local sample information more aggressively, whereas approximation usually provides stronger smoothing and better robustness.
+where
 
-## 3. Evaluation Metrics and Experimental Factors
+$$
+u=\frac{t-t_i}{t_{i+1}-t_i},
+$$
 
-The webpage follows the report and records **three geometric distance metrics** together with runtime information.
+and the cubic basis functions are
 
-### 3.1 Symmetric Chamfer distance
+$$
+h_{00}(u)=2u^3-3u^2+1, \qquad h_{10}(u)=u^3-2u^2+u,
+$$
+$$
+h_{01}(u)=-2u^3+3u^2, \qquad h_{11}(u)=u^3-u^2.
+$$
 
-The main quantitative metric is the symmetric Chamfer distance between a dense target set $A$ and sampled fitted points $B$:
+The tangent vectors are estimated by finite differences:
+
+$$
+M_i = \frac{P_{i+1}-P_{i-1}}{t_{i+1}-t_{i-1}}, \qquad i=1,\dots,n-1,
+$$
+
+with one-sided endpoint formulas
+
+$$
+M_0 = \frac{P_1-P_0}{t_1-t_0},
+\qquad
+M_n = \frac{P_n-P_{n-1}}{t_n-t_{n-1}}.
+$$
+
+This method is fully interpolatory and preserves local geometric detail, but it is also more sensitive to noisy samples.
+
+### 4.2 Cubic B-spline interpolation
+
+The cubic B-spline interpolation model first constructs a knot vector
+
+$$
+U=(u_0,u_1,\dots,u_{n+4}),
+$$
+
+with boundary repetition
+
+$$
+u_0=u_1=u_2=u_3=0, \qquad
+u_{n+1}=u_{n+2}=u_{n+3}=u_{n+4}=1,
+$$
+
+and interior knots determined from the parameter values:
+
+$$
+u_{j+3}=\frac{t_j-t_0}{t_n-t_0}, \qquad j=1,2,\dots,n-1.
+$$
+
+The interpolation constraints are written as
+
+$$
+D_i = \frac{1}{6}C_{i-1}+\frac{2}{3}C_i+\frac{1}{6}C_{i+1},
+\qquad i=1,2,\dots,n-1,
+$$
+
+with endpoint conditions
+
+$$
+D_0=C_0, \qquad D_n=C_n.
+$$
+
+The final curve is
+
+$$
+C(t)=\sum_{j=0}^{n} C_j N_{j,3}(t),
+$$
+
+where $N_{j,3}(t)$ are cubic B-spline basis functions. Compared with Hermite interpolation, this representation has stronger smoothness and a more control-point-oriented structure.
+
+### 4.3 Polynomial least-squares fitting
+
+For the polynomial approximation model, the report uses the least-squares objective
+
+$$
+\min_{a,b} \sum_{i=0}^{n}
+\left[x_i-\sum_{k=0}^{m} a_k\phi_k(t_i)\right]^2
++
+\left[y_i-\sum_{k=0}^{m} b_k\phi_k(t_i)\right]^2,
+$$
+
+with basis functions
+
+$$
+\phi_k(t)=t^k.
+$$
+
+The fitted coordinates are
+
+$$
+x(t)=\sum_{k=0}^{m} a_k\phi_k(t),
+\qquad
+y(t)=\sum_{k=0}^{m} b_k\phi_k(t),
+$$
+
+and the normal equations are
+
+$$
+A^\top A a = A^\top x,
+\qquad
+A^\top A b = A^\top y,
+$$
+
+where
+
+$$
+A_{ik}=\phi_k(t_i).
+$$
+
+This model is global and smoothing by nature, so it often behaves better than exact interpolation when noise is present.
+
+### 4.4 B-spline least-squares fitting
+
+The spline approximation version minimizes
+
+$$
+\min_{C_j}
+\sum_{i=0}^{n}
+\left\|Q_i-\sum_j C_j N_{j,p}(t_i)\right\|^2,
+$$
+
+which leads to the normal equations
+
+$$
+\mathbf{B}^\top \mathbf{B}\mathbf{C}=\mathbf{B}^\top \mathbf{Q}.
+$$
+
+The fitted curve keeps the spline form
+
+$$
+C(t)=\sum_j C_j N_{j,p}(t).
+$$
+
+This method combines the smoothing effect of approximation with the local support and geometric flexibility of spline bases, which is why it performs especially well in the noisy experiments.
+
+## 5. Quantitative Metrics
+
+The report uses several geometric distances to compare a dense target point set $A$ and sampled points on the fitted curve $B$.
+
+### 5.1 Symmetric Chamfer distance
+
+The main metric is the symmetric Chamfer distance:
 
 $$
 d_{\mathrm{ch}}(A,B)=\frac{1}{|A|}\sum_{a\in A}\min_{b\in B}\lVert a-b\rVert_2
 +\frac{1}{|B|}\sum_{b\in B}\min_{a\in A}\lVert b-a\rVert_2.
 $$
 
-It measures the average bidirectional geometric mismatch between the reference curve and the reconstructed curve.
+A smaller value indicates a better overall geometric match.
 
-### 3.2 Average point-to-curve distance
+### 5.2 Average point-to-curve distance
 
-The **average point-to-curve distance** measures the mean distance from sampled reference points to the fitted curve. Compared with Chamfer distance, it is more directly tied to average fitting quality from the data side.
+For selected experiments, the report also uses the average point-to-curve distance:
 
-### 3.3 Hausdorff distance
+$$
+d_{\mathrm{avg}}(A,B)=\frac{1}{|A|}\sum_{a\in A}\min_{b\in B}\lVert a-b\rVert_2.
+$$
 
-The **Hausdorff distance** measures the worst-case geometric deviation between the reference set and the reconstructed set. Compared with the two average-type metrics above, it is more sensitive to local outliers and sharp mismatch.
+This quantity emphasizes the average deviation from the reference curve to the fitted curve.
 
-Therefore, the three metrics serve different purposes:
+### 5.3 Hausdorff distance
 
-- **Chamfer distance** captures overall bidirectional average agreement;
-- **average point-to-curve distance** emphasizes mean fitting error from the point set to the curve;
-- **Hausdorff distance** highlights the largest local deviation.
+To measure worst-case geometric discrepancy, the Hausdorff distance is defined as
 
-For selected experiments, the report also records runtime so that geometric accuracy and computational cost can be viewed together.
+$$
+d_{\mathrm{H}}(A,B)=\max\Bigg\{\max_{a\in A}\min_{b\in B}\lVert a-b\rVert_2,
+\max_{b\in B}\min_{a\in A}\lVert b-a\rVert_2\Bigg\}.
+$$
 
-### 3.4 Experimental factors
+Unlike Chamfer distance, this metric is dominated by the largest local mismatch.
 
-The experiments are organized around four axes:
+In addition, the experiments record runtime and direct visual comparison.
 
-- **method comparison** on representative open and closed curves;
-- **parameterization comparison** for spline interpolation;
-- **node-count sensitivity** to study sampling resolution versus accuracy;
-- **noise robustness** to compare interpolation with approximation.
+## 6. Main Experimental Findings
 
-The parameterization choice is especially important for nonuniform geometry. Uniform spacing ignores local shape variation, chord-length spacing tracks Euclidean spacing, and Foley-type parameterization further emphasizes turning behavior in highly curved regions.
+### 6.1 Method comparison
 
-## 4. Main Experimental Findings
+On smooth open curves such as the S-curve and the sinusoidally modulated curve, all four methods recover the overall shape, but they differ in local behavior. Interpolation methods preserve pointwise structure more faithfully, while least-squares models produce smoother global trends. The zoomed-in figures make these differences much more visible.
 
-### 4.1 Method comparison
+### 6.2 Parameterization
 
-On smooth open curves such as the S-curve and the sinusoidally modulated curve, all four fitting methods recover the global geometry, but they behave differently in local detail.
+The parameterization experiments show that the spline basis alone does not determine final quality. Even with the same interpolation scheme, different parameter assignments produce visibly different reconstructions. On more shape-sensitive examples, the Foley-style strategy allocates parameters more effectively in high-curvature regions and reduces distortion relative to purely uniform spacing.
 
-- **Cubic Hermite interpolation** captures local shape sharply through tangent information.
-- **Cubic B-spline interpolation** remains interpolatory but usually looks slightly smoother in its piecewise transition.
-- **Polynomial least-squares fitting** produces a global approximation and may smooth away local oscillation.
-- **B-spline least-squares fitting** combines smoothing with local support and often gives a balanced compromise.
+### 6.3 Node density
 
-The local zoom figures make these differences much more visible than the global plots.
+As the number of nodes increases, fitting error generally decreases, but the rate of improvement eventually slows down. Simple shapes need only a moderate node count, while oscillatory contours such as the wavy circle require more samples because their geometry contains stronger high-frequency content.
 
-### 4.2 Parameterization
+### 6.4 Noise robustness
 
-The parameterization experiments show that the interpolation result depends not only on the spline basis but also on how the parameter values are assigned to the data. Even with the same interpolation model, different parameterizations produce noticeably different reconstructions. On the more shape-sensitive examples, Foley-style parameterization improves node allocation in high-curvature regions and reduces distortion relative to purely uniform spacing.
+The robustness experiments create one of the clearest contrasts in the project. Interpolation methods inherit perturbations more directly because they are constrained to pass through the samples. Least-squares methods, especially polynomial and B-spline approximation, act as implicit smoothers and therefore maintain lower average error under noise.
 
-### 4.3 Node density
+The distribution plots reinforce this conclusion. The boxplot for the S-curve shows a wider and more skewed spread for interpolation-based methods, indicating stronger sensitivity to perturbation and larger variance across trials. The violin plot for the circle shows that least-squares methods keep a tighter central mass, while interpolation develops longer tails, meaning that both average performance and failure mode are less stable.
 
-The node-count experiments quantify the trade-off between resolution and accuracy. Increasing the number of nodes generally lowers the fitting error, but the improvement eventually slows down. Simple shapes reach saturation quickly, whereas oscillatory shapes such as the wavy circle require more nodes because they contain stronger high-frequency structure.
-
-### 4.4 Noise robustness
-
-The robustness experiments provide the clearest comparison between interpolation and approximation.
-
-- The two **interpolation methods** are more sensitive to perturbation because they are forced to follow the noisy samples directly.
-- The two **least-squares approximation methods** are more robust because they smooth the observations while minimizing an overall residual.
-
-The distribution plots reinforce this conclusion. The boxplot for the S-curve shows a wider and more skewed spread for interpolation-based methods, indicating larger variance across trials. The violin plot for the circle shows that least-squares methods keep a tighter central mass, while interpolation develops longer tails. This means the difference is not only in average error, but also in stability and failure mode under noise.
-
-## 5. Fourier Reconstruction for Closed Curves
+## 7. Fourier Reconstruction for Closed Curves
 
 For periodic closed contours, the project introduces a Fourier representation based on complex samples $z_n=x_n+i y_n$. After discrete Fourier analysis, the reconstruction with harmonic cutoff $K$ is written as
 
@@ -132,22 +253,22 @@ $$
 
 where $c_k$ are Fourier coefficients computed from the sampled contour.
 
-This representation gives a compact frequency-domain description of the curve:
+This gives a compact frequency-domain description of the curve:
 
 - small $K$ preserves only coarse global shape;
 - moderate $K$ recovers dominant geometric features;
-- large $K$ reproduces fine details and local undulations.
+- large $K$ reproduces fine details and sharp local undulations.
 
-The cardioid and wavy-circle examples show this progression clearly. Their static reconstructions visualize how the contour evolves as $K$ increases, and the GIF demonstrations make the epicycle interpretation directly visible. The error-versus-$K$ figures confirm the same trend quantitatively: reconstruction error drops rapidly at first and then gradually saturates once the dominant modes have already been captured.
+The cardioid and wavy-circle examples show this progression clearly. Their static reconstructions visualize how the contour evolves as $K$ increases, and the GIF demonstrations make the epicycle interpretation directly visible. The error-versus-$K$ figures confirm the same trend quantitatively: reconstruction error drops rapidly at first and then enters a saturation regime once the dominant modes have already been captured.
 
-## 6. Website Content Arrangement
+## 8. Website Content Arrangement
 
 Following the report structure, the webpage is arranged in the same logical order:
 
 1. **Abstract**
-2. **Project Overview**
+2. **Project overview and workflow**
 3. **Static SVG figures** in the same order as the report figures
 4. **GIF demos** for Fourier epicycle reconstruction
 5. **Embedded PDF report**
 
-If `HW_3/Images/GUI.jpeg` is uploaded later, the optional GUI screenshot block already reserved in `index.html` can be enabled directly.
+If you later upload `HW_3/Images/GUI.jpeg`, you can also enable the optional GUI screenshot block already reserved in `index.html`.

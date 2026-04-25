@@ -1,0 +1,62 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    # 每 8 小时运行一次，UTC 时间。
+    - cron: "17 */8 * * *"
+  workflow_dispatch:
+
+jobs:
+  wake-streamlit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Visit and wake Streamlit app
+        env:
+          STREAMLIT_URL: "https://stardust-math-mathematical-modeling.streamlit.app/"
+        run: |
+          python - <<'PY'
+          import os
+          from playwright.sync_api import sync_playwright
+
+          url = os.environ["STREAMLIT_URL"]
+
+          with sync_playwright() as p:
+              browser = p.chromium.launch(headless=True)
+              page = browser.new_page()
+              page.goto(url, wait_until="domcontentloaded", timeout=90000)
+
+              # 如果出现 Streamlit 的睡眠页面，尝试点击唤醒按钮
+              possible_buttons = [
+                  "Yes, get this app back up!",
+                  "Get this app back up",
+                  "Wake up",
+              ]
+
+              for text in possible_buttons:
+                  try:
+                      locator = page.get_by_text(text, exact=False)
+                      if locator.count() > 0:
+                          locator.first.click(timeout=15000)
+                          break
+                  except Exception:
+                      pass
+
+              # 等待 app 真正启动
+              page.wait_for_timeout(60000)
+
+              print("Visited:", url)
+              print("Title:", page.title())
+
+              browser.close()
+          PY

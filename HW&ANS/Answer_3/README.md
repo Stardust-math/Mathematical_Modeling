@@ -1,4 +1,4 @@
-# Mathematical Modeling Homework 3: Planar Curve Reconstruction, Approximation, and Periodic Curve Synthesis
+# Planar Curve Reconstruction, Approximation, and Periodic Curve Synthesis
 
 ## 1. Project Overview
 
@@ -141,17 +141,3 @@ streamlit run app/streamlit_app.py
 - Periodic-curve figures: `outputs/figures/fourier/`
 - Paper-style summary figures: `outputs/figures/paper/`
 - Animation outputs: `outputs/animations/fourier/`
-
----
-
-## 5. Current Status
-
-The current version of the project already includes:
-- the full implementation of the main task;
-- periodic curve reconstruction and epicycle visualization;
-- a GUI interface;
-- batch experiment scripts;
-- automatic result and figure generation;
-- the LaTeX report source file.
-
-The report can be compiled directly from `tex/hw3_report.tex`, using the figures and CSV files that have already been generated under `outputs/`.

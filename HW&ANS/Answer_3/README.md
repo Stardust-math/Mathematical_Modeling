@@ -23,13 +23,21 @@ In addition, the project includes a **Streamlit GUI** that allows the user to up
 ```text
 curvefit/
 ├─ app/
-│  └─ streamlit_app.py                 # GUI entry
+│  └─ streamlit_app.py                 # Streamlit GUI entry
 ├─ outputs/
 │  ├─ animations/
 │  │  └─ fourier/                      # epicycle animations for periodic curves
 │  ├─ figures/
 │  │  ├─ fourier/                      # periodic-curve reconstructions, spectra, key frames
+│  │  │  ├─ epicycle_keyframes/         # selected epicycle frames for each test curve
+│  │  │  ├─ k_comparison/              # Fourier reconstruction results under different K
+│  │  │  ├─ spectrum/                  # coefficient spectrum figures
+│  │  │  └─ summary/                   # K-vs-error summary figures
 │  │  ├─ main/                         # figures from the main experiments
+│  │  │  ├─ no_noise_basic/            # basic interpolation/approximation comparisons
+│  │  │  ├─ parameterization/          # parameterization comparison figures
+│  │  │  ├─ node_count/                # node-count sensitivity figures
+│  │  │  └─ noise_robustness/          # noise robustness and distribution figures
 │  │  └─ paper/                        # paper-style summary figures
 │  └─ results/
 │     ├─ fourier/
@@ -48,24 +56,29 @@ curvefit/
 ├─ src/
 │  └─ curvefit/
 │     ├─ core/
-│     │  ├─ approximation.py           # approximation methods
+│     │  ├─ approximation.py           # least-squares approximation methods
+│     │  ├─ base.py                    # shared curve model interface
+│     │  ├─ data.py                    # point-set and curve data utilities
+│     │  ├─ fourier.py                 # Fourier reconstruction and epicycle logic
 │     │  ├─ interpolation.py           # interpolation methods
 │     │  ├─ metrics.py                 # evaluation metrics
 │     │  ├─ parameterization.py        # parameterization methods
-│     │  └─ preprocessing.py           # preprocessing utilities
+│     │  └─ __init__.py
 │     ├─ data/
-│     │  └─ synthetic.py               # synthetic test curve generation
+│     │  ├─ synthetic.py               # synthetic test curve generation
+│     │  └─ __init__.py
 │     ├─ experiments/
 │     │  ├─ fourier_experiments.py     # periodic-curve experiment logic
-│     │  └─ main_experiments.py        # main experiment logic
-│     ├─ fourier/
-│     │  ├─ epicycle.py                # epicycle visualization
-│     │  └─ trig_approx.py             # Fourier / trigonometric approximation
+│     │  ├─ main_experiments.py        # main experiment logic
+│     │  └─ __init__.py
+│     ├─ utils/
+│     │  ├─ io_utils.py                # file and directory utilities
+│     │  └─ __init__.py
 │     ├─ viz/
-│     │  ├─ paper_figures.py           # paper-style plotting
-│     │  └─ plots.py                   # basic plotting functions
+│     │  ├─ plots.py                   # plotting and visualization functions
+│     │  └─ __init__.py
 │     ├─ config.py                     # global configuration
-│     └─ utils.py                      # utility functions
+│     └─ __init__.py
 ├─ tools/
 │  └─ ui_helpers.bat                   # helper bat utilities
 ├─ environment.yml                     # conda environment definition

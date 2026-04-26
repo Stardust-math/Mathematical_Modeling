@@ -75,8 +75,8 @@ $$
 \propto
  d_i\left(1+\lambda\frac{\alpha_i+\alpha_{i+1}}{\pi}\right),
 \qquad \lambda=0.5 .
-\qquad \alpha_i=\arccos\!\left(\frac{(\bm{p}_i-\bm{p}_{i-1})\cdot(\bm{p}_{i+1}-\bm{p}_i)}{\|\bm{p}_i-\bm{p}_{i-1}\|_2\|\bm{p}_{i+1}-\bm{p}_i\|_2}\right),
-\qquad d_i=\|\bm{p}_{i+1}-\bm{p}_i\|_2.
+\qquad \alpha_i=\arccos\!\left(\frac{({p}_i-{p}_{i-1})\cdot({p}_{i+1}-{p}_i)}{\|{p}_i-{p}_{i-1}\|_2\|{p}_{i+1}-{p}_i\|_2}\right),
+\qquad d_i=\|{p}_{i+1}-{p}_i\|_2.
 $$
 
 followed by cumulative summation and normalization to $[0,1]$. Therefore, this rule is not merely a uniform or chord-length spacing rule; it gives relatively more parameter resolution to regions with stronger local bending.

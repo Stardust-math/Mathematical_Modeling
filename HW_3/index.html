@@ -135,13 +135,19 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              This paper studies geometric curve fitting from scattered planar points and compares four main reconstruction families:
-              cubic Hermite spline interpolation, cubic B-spline interpolation, polynomial least-squares fitting, and B-spline least-squares fitting.
-              The experiments are organized around three central questions: how different fitting models behave on representative open and closed curves,
-              how parameterization and node density influence the quality of spline reconstruction, and how interpolation and approximation differ in robustness under noise.
-              In addition, a Fourier-series-based module is introduced for periodic closed contours, where the number of retained harmonics controls the balance
-              between compact representation and geometric accuracy. The overall framework combines geometric visualization, quantitative evaluation, and an interactive GUI,
-              providing a structured comparison between local interpolation, global approximation, and frequency-domain reconstruction strategies.
+              This paper studies planar curve ﬁtting from sampled points under two related viewpoints. In 
+              the ﬁrst part, open and closed curves are represented by parametric functions and approximated 
+              with cubic spline interpolation, B-spline interpolation, polynomial least-squares ﬁtting, and B
+              spline least-squares ﬁtting. The comparison is carried out under diﬀerent parameterization rules, 
+              diﬀerent numbers of sample nodes, and several noise levels. In the second part, closed curves are
+              modeled as periodic signals in the complex plane and reconstructed by truncated Fourier series. 
+              This formulation explains why a closed contour can be viewed as a superposition of circular 
+              motions and also provides a natural way to analyze the eﬀect of the harmonic order. Quantitative 
+              evaluation is based mainly on Chamfer distance, together with visual inspection of local details 
+              and reconstruction stages. The experiments show that spline-based methods are more reliable 
+              on curves with local bends, that parameterization strongly aﬀects interpolation quality on non
+              uniformly curved shapes, and that Fourier reconstruction achieves a clear accuracy gain as more 
+              harmonics are introduced, especially for contours with repeated oscillatory structure.
             </p>
           </div>
         </div>

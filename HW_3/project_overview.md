@@ -29,39 +29,54 @@ and the parameter sequence is normalized to the interval $[0,1]$.
 For **uniform parameterization**,
 
 $$
-t_i=\frac{i}{n-1}, \qquad i=0,1,\dots,n-1.
+t_{i+1}-t_i=\mathrm{const}.
 $$
 
 For **chord-length parameterization**, let
 
 $$
-d_i=\lVert P_i-P_{i-1}\rVert_2, \qquad i=1,2,\dots,n-1.
-$$
-
-Then
-
-$$
-t_0=0, \qquad
-\tilde t_i=\sum_{j=1}^{i} d_j,
-\qquad
-t_i=\frac{\tilde t_i}{\tilde t_{n-1}}.
+t_{i+1}-t_i \propto
+\left\|
+\begin{pmatrix}
+x_{i+1}\\
+y_{i+1}
+\end{pmatrix}
+-
+\begin{pmatrix}
+x_i\\
+y_i
+\end{pmatrix}
+\right\|.
 $$
 
 For **centripetal parameterization**, the chord increment is replaced by its square root:
 
 $$
-\tilde t_i=\sum_{j=1}^{i} \sqrt{d_j},
-\qquad
-t_i=\frac{\tilde t_i}{\tilde t_{n-1}}.
+t_{i+1}-t_i \propto
+\sqrt{
+\left\|
+\begin{pmatrix}
+x_{i+1}\\
+y_{i+1}
+\end{pmatrix}
+-
+\begin{pmatrix}
+x_i\\
+y_i
+\end{pmatrix}
+\right\|
+}.
 $$
 
-For the **Foley--Nielsen-style parameterization** used in this project, the chord increment is adjusted by local turning angles. Let $\theta_i$ denote the turning angle at $P_i$. The implemented increment is
+For the **Foley--Nielsen-style parameterization** used in this project, the chord increment is adjusted by local turning angles:
 
 $$
-\Delta_i
-=
- d_i\left(1+\alpha\frac{\theta_{i-1}+\theta_i}{\pi}\right),
-\qquad \alpha=0.5,
+\Delta t_i
+\propto
+ d_i\left(1+\lambda\frac{\alpha_i+\alpha_{i+1}}{\pi}\right),
+\qquad \lambda=0.5 .
+\qquad \alpha_i=\arccos\!\left(\frac{(\bm{p}_i-\bm{p}_{i-1})\cdot(\bm{p}_{i+1}-\bm{p}_i)}{\|\bm{p}_i-\bm{p}_{i-1}\|_2\|\bm{p}_{i+1}-\bm{p}_i\|_2}\right),
+\qquad d_i=\|\bm{p}_{i+1}-\bm{p}_i\|_2.
 $$
 
 followed by cumulative summation and normalization to $[0,1]$. Therefore, this rule is not merely a uniform or chord-length spacing rule; it gives relatively more parameter resolution to regions with stronger local bending.

@@ -101,9 +101,7 @@ On each interval $[t_i,t_{i+1}]$, both coordinate functions are represented by c
 
 $$
 S_i(t_{i+1})=S_{i+1}(t_{i+1}),
-$$
-
-$$
+\qquad
 S_i'(t_{i+1})=S_{i+1}'(t_{i+1}),
 \qquad
 S_i''(t_{i+1})=S_{i+1}''(t_{i+1}).

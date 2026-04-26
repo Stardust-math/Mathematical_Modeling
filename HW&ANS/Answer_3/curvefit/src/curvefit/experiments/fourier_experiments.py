@@ -27,17 +27,17 @@ class FourierExperimentRunner:
                 metric = evaluate_reconstruction(points, curve, ref, closed=True, runtime_sec=0.0).to_dict()
                 row = {"shape": shape, "K": k}; row.update(metric); rows.append(row)
                 import matplotlib.pyplot as plt
-                fig = plot_points_and_curve(points, curve, title=f"{shape} | Fourier K={k}", closed=True, save_path=self.figures_dir / "k_comparison" / f"{shape}_K{k}.svg"); plt.close(fig)
+                fig = plot_points_and_curve(points, curve, title=f"{shape} | Fourier K={k}", closed=True, save_path=self.figures_dir / "k_comparison" / f"{shape}_K{k}.png"); plt.close(fig)
             freqs, amps = approximator.spectrum()
             import matplotlib.pyplot as plt
-            fig = plot_spectrum(freqs, amps, title=f"Spectrum | {shape}", save_path=self.figures_dir / "spectrum" / f"{shape}_spectrum.svg"); plt.close(fig)
-            save_epicycle_keyframes(approximator, k=12, n_frames=6, out_dir=self.figures_dir / "epicycle_keyframes" / shape, prefix=f"{shape}_epicycle")
-            animate_epicycle(approximator, k=12, n_frames=90, save_path=self.animations_dir / f"{shape}_epicycle.gif")
+            fig = plot_spectrum(freqs, amps, title=f"Spectrum | {shape}", save_path=self.figures_dir / "spectrum" / f"{shape}_spectrum.png"); plt.close(fig)
+            save_epicycle_keyframes(approximator, k=30, n_frames=6, out_dir=self.figures_dir / "epicycle_keyframes" / shape, prefix=f"{shape}_epicycle")
+            animate_epicycle(approximator, k=30, n_frames=90, save_path=self.animations_dir / f"{shape}_epicycle.gif")
         df = pd.DataFrame(rows); save_dataframe_csv(df, self.results_dir / "fourier_k_comparison.csv")
         import matplotlib.pyplot as plt
         for shape in df["shape"].unique():
             sub = df[df["shape"] == shape]
-            fig = plot_line_chart(sub, x="K", y="chamfer", hue="shape", title=f"K vs error | {shape}", save_path=self.figures_dir / "summary" / f"{shape}_K_vs_error.svg"); plt.close(fig)
+            fig = plot_line_chart(sub, x="K", y="chamfer", hue="shape", title=f"K vs error | {shape}", save_path=self.figures_dir / "summary" / f"{shape}_K_vs_error.png"); plt.close(fig)
         return df
     def run_all(self):
         return {"fourier_k_comparison": self.run_k_comparison()}

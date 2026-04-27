@@ -48,6 +48,12 @@ def _fit_curve(method, points, parameterization, closed, degree, smoothing):
     return fit_approximation(method, points, parameterization=parameterization, closed=closed, **kwargs)
 
 
+def _fourier_process_steps(K):
+    K = int(max(0, K))
+    candidates = [0, 1, max(1, K // 4), max(1, K // 2), K]
+    return sorted({k for k in candidates if 0 <= k <= K})
+
+
 def main():
     st.set_page_config(page_title="Curve Fitting GUI", layout="wide")
     st.title("Planar Curve Fitting and Fourier Visualization")
@@ -131,10 +137,21 @@ def main():
         else:
             try:
                 approximator = FourierApproximator(points, n_resample=fourier_resample)
+
                 curve = approximator.reconstruct(k=K, n_samples=n_curve_samples)
                 fig = plot_points_and_curve(points, curve, title=f"Fourier Reconstruction | K={K}", closed=True)
                 st.pyplot(fig)
                 plt.close(fig)
+
+                st.subheader("Fourier reconstruction process")
+                st.caption("Increasing K adds more Fourier harmonics, so the curve changes from a coarse low-frequency outline to a detailed reconstruction.")
+                k_steps = _fourier_process_steps(K)
+                cols = st.columns(len(k_steps))
+                for col, k_step in zip(cols, k_steps):
+                    step_curve = approximator.reconstruct(k=k_step, n_samples=n_curve_samples)
+                    step_fig = plot_points_and_curve(points, step_curve, title=f"K={k_step}", closed=True)
+                    col.pyplot(step_fig)
+                    plt.close(step_fig)
 
                 freqs, amps = approximator.spectrum()
                 fig = plot_spectrum(freqs, amps, title="Fourier Spectrum")
@@ -143,7 +160,8 @@ def main():
 
                 t_show = st.slider("Epicycle Time t", 0.0, 1.0, 0.2, 0.02, key="t_show")
                 chain = approximator.epicycle_chain(t_show, k=K)
-                traced = approximator.reconstruct(k=K, n_samples=max(50, int(t_show * n_curve_samples)))
+                n_trace = max(2, int(max(t_show, 1e-12) * n_curve_samples))
+                traced = approximator.partial_trace(k=K, t_end=t_show, n_samples=n_trace)
                 fig = plot_epicycle_snapshot(
                     chain,
                     traced_curve=traced,

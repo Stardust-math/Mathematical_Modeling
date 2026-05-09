@@ -1,0 +1,2 @@
+model,R0,beta0,gamma,mu,peak_i,t_peak,s_final,i_final,r_final,n_local_peaks,largest_local_peak,mass_error_max,min_state_value,max_mass_error,min_value,has_recurrent_peaks,n_late_peaks
+demographic_sir,15.0,780.2142857142857,52.0,0.014285714285714285,0.7521708249212087,0.016438356164383564,0.06645045919245882,0.00011826989551541417,0.9334312709120245,12,0.7521708249212087,4.218847493575595e-15,0.0,4.218847493575595e-15,0.0,True,11

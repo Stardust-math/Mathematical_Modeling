@@ -1,0 +1,2 @@
+model,R0,beta0,gamma,mu,late_start,n_late_peaks,first_late_peak_time,first_late_peak_i,mean_late_peak_i,mean_late_peak_interval
+demographic_sir,15.0,780.2142857142857,52.0,0.014285714285714285,1.0,11,9.86986301369863,0.018934711064410813,0.0036709572273982446,2.9168493150684935

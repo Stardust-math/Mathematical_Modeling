@@ -1,0 +1,2 @@
+model,R0,beta,gamma,peak_i,t_peak,s_final,i_final,r_final,n_local_peaks,largest_local_peak,mass_error_max,min_state_value,max_mass_error,min_value,final_infection_near_zero
+basic_sir,8.0,416.0,52.0,0.6146457819746174,0.031506849315068496,0.0003364758350980588,1.1715843572583894e-22,0.9996635241649017,1,0.6146457819746174,4.440892098500626e-16,0.0,4.440892098500626e-16,0.0,True

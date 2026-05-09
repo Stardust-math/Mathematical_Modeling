@@ -1,0 +1,10 @@
+name: hw4-sir-periodic
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy>=1.26
+  - scipy>=1.11
+  - pandas>=2.1
+  - matplotlib>=3.8
+  - tqdm>=4.66

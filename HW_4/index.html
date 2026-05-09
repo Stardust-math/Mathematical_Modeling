@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mathematical Modeling HW 4 — Periodic Outbreaks in Compartmental Epidemic Models</title>
+  <meta name="description" content="Mathematical Modeling HW 4 project page.">
+  <meta property="og:title" content="Mathematical Modeling HW 4 — Periodic Outbreaks in Compartmental Epidemic Models">
+  <meta property="og:description" content="A numerical study of periodic epidemic outbreaks using SIR-type deterministic and stochastic models.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stardust-math.github.io/Mathematical_Modeling/HW_4/">
+
+  <link rel="icon" type="image/png" href="../static/images/favicon.png">
+  <link rel="apple-touch-icon" href="../static/images/favicon.png">
+
+  <link rel="stylesheet" href="../static/css/bulma.min.css">
+  <link rel="stylesheet" href="../static/css/index.css">
+  <link rel="stylesheet" href="../static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="../static/css/hw.css">
+  <link rel="stylesheet" href="../static/css/md.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="../static/js/fontawesome.all.min.js"></script>
+  <script defer src="../static/js/bulma-carousel.min.js"></script>
+  <script defer src="../static/js/bulma-slider.min.js"></script>
+  <script defer src="../static/js/index.js"></script>
+</head>
+
+<body>
+  <section class="hero publication-header">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title hw-title">
+              Mathematical Modeling HW 4 &mdash;<br>
+              <span class="hw-title-sub">
+                Periodic Outbreaks in<br>
+                Compartmental Epidemic Models
+              </span>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://stardust-math.github.io/" target="_blank" rel="noopener noreferrer">
+                  Jinghao Chen
+                </a>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                University of Science and Technology of China, School of Mathematical Sciences
+              </span>
+            </div>
+
+            <div class="hw-meta">
+              <span class="hw-chip">SIR Model</span>
+              <span class="hw-chip">Demographic Renewal</span>
+              <span class="hw-chip">Seasonal Forcing</span>
+              <span class="hw-chip">Gillespie Simulation</span>
+              <span class="hw-chip">Early Fade-out</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a
+                    href="../HW%26ANS/Answer_4/Periodic_Outbreaks_in_Compartmental_Epidemic_Models.pdf"
+                    download="Periodic_Outbreaks_in_Compartmental_Epidemic_Models.pdf"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a
+                    href="https://github.com/Stardust-math/Mathematical_Modeling/tree/main/HW%26ANS/Answer_4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light hw-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              This report studies the mechanisms by which recurrent epidemic outbreaks may arise from susceptible--infected--removed (SIR)-type differential equation models. Starting from the basic SIR model, the experiments first show why a closed susceptible--infected--removed system produces a single outbreak and then approaches disease disappearance. The model is then extended by balanced births and deaths, which replenish susceptible individuals and allow secondary infection peaks after the initial epidemic wave. A seasonally forced transmission rate is further introduced to test whether an external periodic driver can maintain long-term recurrent outbreaks. Finally, an integer-population stochastic model is used to examine early fade-out when the number of infected individuals is small. The numerical results form a consistent mechanism chain: the basic SIR model explains a single epidemic, demographic turnover provides a susceptible source for recurrent peaks, seasonal forcing sustains richer long-term periodic structures, and stochasticity can prevent outbreak establishment even when the deterministic model predicts growth.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light hw-section md-section">
+    <div class="hero-body">
+      <div class="container">
+        <div class="md-panel-header">
+          <h2 class="title is-3 has-text-centered">Project Overview</h2>
+        </div>
+        <div class="md-panel">
+          <div class="md-render" id="project-overview"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered">Image Demos</h2>
+        <div id="image-carousel" class="carousel results-carousel">
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig01_basic_sir.svg" alt="Baseline SIR dynamics" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Baseline SIR Dynamics</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig02_R0_comparison.svg" alt="R0 comparison" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Reproduction-Number Comparison</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig02b_gamma_comparison.svg" alt="Recovery-rate comparison" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Recovery-Rate Comparison</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig03_threshold_s0.svg" alt="Initial susceptible threshold scan" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Initial-Susceptible Threshold</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig04_demographic_sir.svg" alt="Demographic SIR dynamics" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Demographic SIR Dynamics</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig04b_demographic_R0_comparison.svg" alt="Demographic R0 comparison" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Demographic R0 Comparison</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig05_basic_vs_demographic.svg" alt="Basic and demographic SIR comparison" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Basic vs. Demographic SIR</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig06_seasonal_alpha_curves.svg" alt="Seasonal alpha curves" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Seasonal Forcing Curves</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig07_beta_infection_phase.svg" alt="Transmission and infection phase relationship" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Transmission--Infection Phase</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig08_alpha_bifurcation.svg" alt="Seasonal alpha annual sampling" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Annual Samples in Alpha Scan</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig09_peak_statistics.svg" alt="Seasonal peak statistics" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Seasonal Peak Statistics</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig10_pattern_classification.svg" alt="Seasonal pattern classification" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Seasonal Pattern Classification</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig11_stochastic_vs_deterministic.svg" alt="Stochastic and deterministic comparison" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Stochastic vs. Deterministic Paths</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig12_extinction_heatmap.svg" alt="Early fade-out heatmap" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Early Fade-out Heatmap</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig13_extinction_time_distribution.svg" alt="Extinction time distribution" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Fade-out Time Distribution</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig14_alpha_extinction_probability.svg" alt="Seasonal alpha establishment probability" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Seasonal Alpha Establishment</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/fig14b_phase_sensitivity.svg" alt="Seasonal phase sensitivity" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Seasonal Phase Sensitivity</h2>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small hw-section">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title has-text-centered">Paper Presentation</h2>
+        <div class="poster-shell">
+          <iframe
+            src="../HW%26ANS/Answer_4/Periodic_Outbreaks_in_Compartmental_Epidemic_Models.pdf"
+            width="100%"
+            height="900"
+            style="border: none;">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+                Academic Project Page Template
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const target = document.getElementById('project-overview');
+      if (!target) return;
+
+      function protectMath(text) {
+        const mathBlocks = [];
+        const patterns = [
+          /\$\$[\s\S]+?\$\$/g,
+          /\\\[[\s\S]+?\\\]/g,
+          /\\\([\s\S]+?\\\)/g,
+          /(?<!\\)\$(?!\$)(?:\\.|[^$\\])+(?<!\\)\$/g
+        ];
+
+        let protectedText = text;
+        for (const pattern of patterns) {
+          protectedText = protectedText.replace(pattern, (match) => {
+            const token = `@@MATH_${mathBlocks.length}@@`;
+            mathBlocks.push(match);
+            return token;
+          });
+        }
+        return { protectedText, mathBlocks };
+      }
+
+      function restoreMath(html, mathBlocks) {
+        return html.replace(/@@MATH_(\d+)@@/g, (_, index) => mathBlocks[Number(index)]);
+      }
+
+      try {
+        const response = await fetch('./project_overview.md', { cache: 'no-cache' });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const mdText = await response.text();
+        const { protectedText, mathBlocks } = protectMath(mdText);
+
+        marked.setOptions({
+          gfm: true,
+          breaks: false,
+          headerIds: true,
+          mangle: false
+        });
+
+        const renderedHtml = marked.parse(protectedText);
+        target.innerHTML = restoreMath(renderedHtml, mathBlocks);
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          await window.MathJax.typesetPromise([target]);
+        }
+      } catch (error) {
+        target.innerHTML = `
+          <p class="md-error">
+            Failed to load <code>project_overview.md</code>. Please make sure the file exists in the <code>HW_4</code> folder.
+          </p>
+        `;
+        console.error('Markdown render error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+field,value
+random_seed,20260614
+time_horizon,30
+num_agents_per_scenario,35
+scenarios,"small_volunteer, rapid_growth, critical_infrastructure, burnout_prone"
+policies,"baseline, subsidy, penalty, reputation, matching_fund, threshold_governance, combined_portfolio"
+parameter_source_type,synthetic / simulation-based
+execution_profile,paper
+output_files_count,71
+reproducibility_note,All synthetic experiments use fixed random seeds and explicit synthetic scenario labels.

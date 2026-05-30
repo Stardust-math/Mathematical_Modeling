@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Mathematical Modeling Final — From Private Incentives to Public Stability: Modeling Free Riding in Dynamic Public-Good Provision</title>
-  <meta name="description" content="Mathematical Modeling final project page on free riding, private incentives, and public stability in dynamic public-good provision.">
-  <meta property="og:title" content="Mathematical Modeling Final — From Private Incentives to Public Stability: Modeling Free Riding in Dynamic Public-Good Provision">
-  <meta property="og:description" content="A simulation-based Dynamic Stock–Pressure Free-Riding framework for modeling private incentives, public stability, policy intervention, robustness, and Pareto trade-off analysis.">
+  <title>Mathematical Modeling Final — Free Riding Under Pressure: A Dynamic Stock–Pressure Model for Public-Good Governance</title>
+  <meta name="description" content="A simulation-based Dynamic Stock–Pressure Free-Riding framework for public-good governance, free-riding diagnosis, policy intervention, robustness analysis, and Pareto trade-off evaluation.">
+  <meta property="og:title" content="Mathematical Modeling Final — Free Riding Under Pressure: A Dynamic Stock–Pressure Model for Public-Good Governance">
+  <meta property="og:description" content="A dynamic stock–pressure model for studying free riding in public-good provision, comparing Nash-style individual rationality with a stage-wise social-planner benchmark and evaluating governance policies.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stardust-math.github.io/Mathematical_Modeling/Final/">
 
@@ -54,9 +54,9 @@
             <h1 class="title is-1 publication-title hw-title">
               Mathematical Modeling Final &mdash;<br>
               <span class="hw-title-sub">
-                From Private Incentives to Public Stability:<br>
-                Modeling Free Riding in Dynamic<br>
-                Public-Good Provision
+                Free Riding Under Pressure:<br>
+                A Dynamic Stock&ndash;Pressure Model<br>
+                for Public-Good Governance
               </span>
             </h1>
 
@@ -78,6 +78,7 @@
               <span class="hw-chip">Public Goods</span>
               <span class="hw-chip">Free Riding</span>
               <span class="hw-chip">Dynamic Game</span>
+              <span class="hw-chip">Stock&ndash;Pressure System</span>
               <span class="hw-chip">Social-Planner Benchmark</span>
               <span class="hw-chip">Policy Intervention</span>
               <span class="hw-chip">Simulation-Based Modeling</span>
@@ -87,8 +88,8 @@
               <div class="publication-links">
                 <span class="link-block">
                   <a
-                    href="../HW%26ANS/Final/From_Private_Incentives_to_Public_Stability_Modeling_Free_Riding_in_Dynamic_Public_Good_Provision.pdf"
-                    download="From_Private_Incentives_to_Public_Stability_Modeling_Free_Riding_in_Dynamic_Public_Good_Provision.pdf"
+                    href="../HW%26ANS/Final/Free_Riding_Under_Pressure_Dynamic_Stock_Pressure_Model_Public_Good_Governance.pdf"
+                    download="Free_Riding_Under_Pressure_Dynamic_Stock_Pressure_Model_Public_Good_Governance.pdf"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fas fa-file-pdf"></i></span>
                     <span>Paper</span>
@@ -103,6 +104,15 @@
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fab fa-github"></i></span>
                     <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a
+                    href="#project-overview-section"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-diagram-project"></i></span>
+                    <span>Overview</span>
                   </a>
                 </span>
               </div>
@@ -121,7 +131,10 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              This project studies free riding in dynamic public-good provision. Public goods such as environmental governance, open-source maintenance, public infrastructure, and community services create a common governance dilemma: the collective stock benefits all participants, while contribution costs are borne privately. To explain how decentralized individual rationality can generate persistent under-provision, the project develops a simulation-based Dynamic Stock&ndash;Pressure Free-Riding framework. The model combines heterogeneous agents, a dynamic public-good stock, maintenance pressure, demand feedback, capacity saturation, and policy intervention. Controlled synthetic scenarios are used to compare a Nash-style individual-rational benchmark with a stage-wise social-planner benchmark, quantify free-riding gaps and welfare losses, and evaluate subsidy, penalty, reputation, matching fund, threshold governance, and combined portfolio policies under sensitivity, robustness, Monte Carlo, and Pareto trade-off analyses.
+              This project studies free riding in dynamic public-good provision. Public goods such as environmental governance, open-source maintenance, public infrastructure, and community services create a common dilemma: the collective stock benefits all participants, while contribution costs are borne privately. To explain this mechanism, the project develops a simulation-based Dynamic Stock&ndash;Pressure Free-Riding framework that links heterogeneous agents, contribution, public-good stock, maintenance pressure, demand feedback, capacity saturation, and policy intervention in one dynamic multi-agent system.
+            </p>
+            <p>
+              Under controlled synthetic scenarios, the model compares a Nash-style individual-rational benchmark with a stage-wise social-planner benchmark, quantifies free-riding gaps, under-provision, and welfare loss, and evaluates subsidy, penalty, reputation, matching fund, threshold governance, and combined portfolio policies. The numerical experiments suggest that public-good governance should be scenario-specific: low-cost incentive correction is suitable when the system remains stable, while portfolio governance becomes more appropriate when maintenance pressure and reliability risks dominate.
             </p>
           </div>
         </div>
@@ -129,7 +142,7 @@
     </div>
   </section>
 
-  <section class="hero is-small is-light hw-section md-section">
+  <section id="project-overview-section" class="hero is-small is-light hw-section md-section">
     <div class="hero-body">
       <div class="container">
         <div class="md-panel-header">
@@ -146,6 +159,7 @@
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered">Image Demos</h2>
+
         <div id="image-carousel" class="carousel results-carousel">
 
           <div class="item">
@@ -171,7 +185,7 @@
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_nash_social_comparison.svg" alt="Nash-style and social-planner comparison" loading="lazy" />
+              <img src="./Images/synthetic_nash_social_comparison.svg" alt="Nash-style individual rationality and social-planner benchmark comparison" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">Nash-Style vs. Social-Planner Benchmark</h2>
           </div>
@@ -185,7 +199,7 @@
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_welfare_loss_decomposition.svg" alt="Welfare loss decomposition" loading="lazy" />
+              <img src="./Images/synthetic_welfare_loss_decomposition.svg" alt="Free-riding gap and welfare-loss decomposition" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">Welfare-Loss Decomposition</h2>
           </div>
@@ -199,79 +213,65 @@
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_policy_comparison.svg" alt="Policy comparison" loading="lazy" />
+              <img src="./Images/synthetic_policy_comparison.svg" alt="Policy comparison under the critical-infrastructure scenario" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">Policy Comparison</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_policy_ablation.svg" alt="Policy ablation comparison" loading="lazy" />
+              <img src="./Images/synthetic_policy_decision_matrix.svg" alt="Normalized multi-criteria policy decision matrix" loading="lazy" />
             </div>
-            <h2 class="subtitle has-text-centered">Policy Ablation</h2>
+            <h2 class="subtitle has-text-centered">Multi-Criteria Policy Decision Matrix</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_scenario_radar.svg" alt="Multi-dimensional policy radar" loading="lazy" />
-            </div>
-            <h2 class="subtitle has-text-centered">Multi-Dimensional Policy Radar</h2>
-          </div>
-
-          <div class="item">
-            <div class="image-demo-frame">
-              <img src="./Images/fig_policy_response_surface_3d.svg" alt="Subsidy penalty response surface" loading="lazy" />
+              <img src="./Images/fig_policy_response_surface_3d.svg" alt="Three-dimensional pure subsidy penalty response surface" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">3D Subsidy&ndash;Penalty Response Surface</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_subsidy_penalty_welfare_heatmap.svg" alt="Subsidy penalty welfare heatmap" loading="lazy" />
-            </div>
-            <h2 class="subtitle has-text-centered">Subsidy&ndash;Penalty Welfare Heatmap</h2>
-          </div>
-
-          <div class="item">
-            <div class="image-demo-frame">
-              <img src="./Images/synthetic_subsidy_penalty_freeriding_heatmap.svg" alt="Subsidy penalty free-riding heatmap" loading="lazy" />
-            </div>
-            <h2 class="subtitle has-text-centered">Subsidy&ndash;Penalty Free-Riding Heatmap</h2>
-          </div>
-
-          <div class="item">
-            <div class="image-demo-frame">
-              <img src="./Images/synthetic_pareto_front.svg" alt="Pareto frontier for policy trade-offs" loading="lazy" />
+              <img src="./Images/synthetic_pareto_front.svg" alt="Pareto frontier for governance policy portfolios" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">Pareto Frontier</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/fig_pareto_front_3d.svg" alt="Three-dimensional Pareto frontier projection" loading="lazy" />
+              <img src="./Images/fig_pareto_front_3d.svg" alt="Three-dimensional Pareto trade-off projection" loading="lazy" />
             </div>
             <h2 class="subtitle has-text-centered">3D Pareto Trade-Off Projection</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
-              <img src="./Images/synthetic_parameter_sensitivity_heatmap.svg" alt="Parameter sensitivity heatmap" loading="lazy" />
+              <img src="./Images/synthetic_behavioral_weight_robustness.svg" alt="Behavioral-weight robustness analysis" loading="lazy" />
             </div>
-            <h2 class="subtitle has-text-centered">Parameter Sensitivity</h2>
+            <h2 class="subtitle has-text-centered">Behavioral-Weight Robustness</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/synthetic_solver_damping_robustness.svg" alt="Solver damping robustness analysis" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Solver-Damping Robustness</h2>
+          </div>
+
+          <div class="item">
+            <div class="image-demo-frame">
+              <img src="./Images/synthetic_monte_carlo_uncertainty.svg" alt="Monte Carlo policy welfare distribution" loading="lazy" />
+            </div>
+            <h2 class="subtitle has-text-centered">Monte Carlo Welfare Distribution</h2>
           </div>
 
           <div class="item">
             <div class="image-demo-frame">
               <img src="./Images/synthetic_monte_carlo_welfare_uncertainty_band.svg" alt="Monte Carlo welfare uncertainty band" loading="lazy" />
             </div>
-            <h2 class="subtitle has-text-centered">Monte Carlo Welfare Uncertainty</h2>
-          </div>
-
-          <div class="item">
-            <div class="image-demo-frame">
-              <img src="./Images/synthetic_monte_carlo_G_uncertainty_band.svg" alt="Monte Carlo public-good stock uncertainty band" loading="lazy" />
-            </div>
-            <h2 class="subtitle has-text-centered">Monte Carlo Stock Uncertainty</h2>
+            <h2 class="subtitle has-text-centered">Monte Carlo Welfare Uncertainty Band</h2>
           </div>
 
         </div>
@@ -285,7 +285,7 @@
         <h2 class="title has-text-centered">Paper Presentation</h2>
         <div class="poster-shell">
           <iframe
-            src="../HW%26ANS/Final/From_Private_Incentives_to_Public_Stability_Modeling_Free_Riding_in_Dynamic_Public_Good_Provision.pdf"
+            src="../HW%26ANS/Final/Free_Riding_Under_Pressure_Dynamic_Stock_Pressure_Model_Public_Good_Governance.pdf"
             width="100%"
             height="900"
             style="border: none;">

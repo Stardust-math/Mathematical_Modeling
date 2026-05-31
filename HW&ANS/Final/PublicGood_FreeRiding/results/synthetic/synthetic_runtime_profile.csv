@@ -1,0 +1,13 @@
+execution_profile,step,seconds,note
+paper,agent_and_scenario_generation,0.0109,"synthetic agents, scenario-parameter table, and processed agent CSV"
+paper,policy_trajectory_simulation,2.1823,all scenario-policy Nash-style trajectories and policy comparison table
+paper,monte_carlo_uncertainty,10.483,"Monte Carlo runs, summary, and trajectory bands"
+paper,pareto_policy_search,7.11,random policy portfolios and full multi-indicator Pareto screen
+paper,nash_social_trajectories,8.4507,dynamic Nash-style and stage-wise social-planner baseline trajectories generated in a fresh worker process
+paper,sensitivity_and_response_surface,28.3078,"1D sensitivity, 2D heatmap, and fine-grid 3D pure subsidy-penalty response surface"
+paper,benchmark_comparison,0.3814,"Nash-style individual rationality, stage-wise planner, diagnostics, and trajectories"
+paper,evolutionary_dynamics,0.0044,replicator-style auxiliary policy dynamics
+paper,perturbed_scenario_robustness,0.8047,"decay, cost, and demand perturbations for baseline versus combined portfolio in critical_infrastructure"
+paper,behavioral_and_solver_robustness,8.9492,"joint weight scaling, one-at-a-time weight perturbations, weight-scale audit, and damping checks"
+paper,figure_generation,37.6762,all paper and synthetic figures regenerated from saved CSV outputs
+paper,manifest_and_caption_assets,104.3801,"total wall time through manifest, caption index, and output discovery"

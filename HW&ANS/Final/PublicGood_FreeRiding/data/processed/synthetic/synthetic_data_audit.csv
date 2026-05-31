@@ -1,0 +1,5 @@
+scenario,random_seed,time_horizon,num_agents,parameter_source_type,data_label,output_tag,note
+small_volunteer,20260614,30,35,synthetic,simulation-based,synthetic,Synthetic scenario for mechanism study; not real-world observation.
+rapid_growth,20260614,30,35,synthetic,simulation-based,synthetic,Synthetic scenario for mechanism study; not real-world observation.
+critical_infrastructure,20260614,30,35,synthetic,simulation-based,synthetic,Synthetic scenario for mechanism study; not real-world observation.
+burnout_prone,20260614,30,35,synthetic,simulation-based,synthetic,Synthetic scenario for mechanism study; not real-world observation.
